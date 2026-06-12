@@ -1,0 +1,8 @@
+subprojects {
+    group = 'com.eclectusstudio'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
+}

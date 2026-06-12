@@ -1,0 +1,9 @@
+name: Pantheon
+description: $description
+version: '$version'
+
+main: com.eclectusstudio.pantheon.Pantheon
+api-version: '26.1.2'
+load: POSTWORLD
+
+authors: [Eclectus Studio]
