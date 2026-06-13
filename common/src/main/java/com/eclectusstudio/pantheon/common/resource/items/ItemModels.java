@@ -12,9 +12,38 @@ public class ItemModels {
         this.model = model;
     }
 
-    public ItemModels() {}
+    public ItemModels() {
+    }
+
+    public boolean isHandAnimationOnSwap() {
+        return handAnimationOnSwap;
+    }
+
+    public void setHandAnimationOnSwap(boolean handAnimationOnSwap) {
+        this.handAnimationOnSwap = handAnimationOnSwap;
+    }
+
+    public boolean isOversizedInGui() {
+        return oversizedInGui;
+    }
+
+    public void setOversizedInGui(boolean oversizedInGui) {
+        this.oversizedInGui = oversizedInGui;
+    }
+
+    public float getSwapAnimationScale() {
+        return swapAnimationScale;
+    }
+
+    public void setSwapAnimationScale(float swapAnimationScale) {
+        this.swapAnimationScale = swapAnimationScale;
+    }
 
     public ItemModel getModel() {
         return model;
+    }
+
+    public void setModel(ItemModel model) {
+        this.model = model;
     }
 }

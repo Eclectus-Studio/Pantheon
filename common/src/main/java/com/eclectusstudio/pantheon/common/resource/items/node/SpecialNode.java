@@ -25,12 +25,25 @@ public class SpecialNode implements ItemModelNode {
         return "minecraft:special";
     }
 
-    public SpecialNode(SpecialType specialType) {
+    public SpecialNode(
+            SpecialType specialType
+    ) {
         this.specialType = specialType;
     }
 
-    public SpecialNode(SpecialType specialType, String base) {
+    public SpecialNode(
+            SpecialType specialType,
+            String base
+    ) {
         this.specialType = specialType;
         this.base = base;
+    }
+
+    public SpecialType getSpecialType() {
+        return specialType;
+    }
+
+    public String getBase() {
+        return base;
     }
 }

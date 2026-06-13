@@ -5,10 +5,14 @@ import java.util.List;
 public class RangeDispatchNode implements ItemModelNode {
 
     public static class Entry {
+
         public float threshold;
         public ItemModelNode model;
 
-        public Entry(float threshold, ItemModelNode model) {
+        public Entry(
+                float threshold,
+                ItemModelNode model
+        ) {
             this.threshold = threshold;
             this.model = model;
         }
@@ -22,8 +26,19 @@ public class RangeDispatchNode implements ItemModelNode {
         return "minecraft:range_dispatch";
     }
 
-    public RangeDispatchNode(String property, List<Entry> entries) {
+    public RangeDispatchNode(
+            String property,
+            List<Entry> entries
+    ) {
         this.property = property;
         this.entries = entries;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public List<Entry> getEntries() {
+        return entries;
     }
 }
