@@ -4,3 +4,5 @@ build/
 out/
 *.iml
 .DS_Store
+/common/build
+/26.1.2/build
