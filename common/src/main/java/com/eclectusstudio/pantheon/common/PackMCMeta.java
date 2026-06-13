@@ -51,4 +51,24 @@ public final class PackMCMeta {
             return meta;
         }
     }
+
+    public PackInfo getPack() {
+        return pack;
+    }
+
+    public Features getFeatures() {
+        return features;
+    }
+
+    public Filter getFilter() {
+        return filter;
+    }
+
+    public Overlays getOverlays() {
+        return overlays;
+    }
+
+    public Map<String, LanguageDefinition> getLanguage() {
+        return language;
+    }
 }

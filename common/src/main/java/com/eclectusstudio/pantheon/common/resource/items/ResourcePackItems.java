@@ -1,36 +1,30 @@
 package com.eclectusstudio.pantheon.common.resource.items;
 
 import com.eclectusstudio.pantheon.common.ResourceLocation;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ResourcePackItems {
 
-    // The master registry map
-    private  final Map<ResourceLocation, ItemModels> ITEM_MODELS_REGISTRY = new HashMap<>();
+    private final Map<ResourceLocation, ItemModels> itemModels =
+            new HashMap<>();
 
-    /**
-     * Registers a new item model.
-     */
-    public  void register(ResourceLocation location, ItemModels model) {
-        if (ITEM_MODELS_REGISTRY.containsKey(location)) {
-            throw new IllegalArgumentException("Duplicate item model registration for key: " + location);
-        }
-        ITEM_MODELS_REGISTRY.put(location, model);
+    public void register(
+            ResourceLocation location,
+            ItemModels model
+    ) {
+        itemModels.put(location, model);
     }
 
-    /**
-     * Retrieves an item model by its resource location.
-     * Returns null if not found.
-     */
-    public  ItemModels getModel(ResourceLocation location) {
-        return ITEM_MODELS_REGISTRY.get(location);
+    public ItemModels getModel(
+            ResourceLocation location
+    ) {
+        return itemModels.get(location);
     }
 
-    /**
-     * Gets an unmodifiable view of all registered models (good practice for API safety).
-     */
-    public  Map<ResourceLocation, ItemModels> getAllModels() {
-        return java.util.Collections.unmodifiableMap(ITEM_MODELS_REGISTRY);
+    public Map<ResourceLocation, ItemModels> getAllModels() {
+        return Collections.unmodifiableMap(itemModels);
     }
 }

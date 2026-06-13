@@ -1,2 +1,4 @@
+rootProject.name = "Pantheon"
+
 include 'common'
 include '26.1.2'
