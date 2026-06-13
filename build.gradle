@@ -8,14 +8,4 @@ subprojects {
     repositories {
         mavenCentral()
     }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                // Forces the artifact ID to match the submodule name (e.g., v26.1.2)
-                artifactId = project.name
-            }
-        }
-    }
 }

@@ -12,3 +12,12 @@ repositories {
 dependencies {
     implementation 'com.google.code.gson:gson:2.14.0'
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId = project.name
+        }
+    }
+}

@@ -19,6 +19,11 @@ java {
 }
 
 tasks {
+    shadowJar {
+        configurations.set(listOf(project.configurations.shadow.get()))
+        archiveClassifier.set("all")
+    }
+
     build {
         dependsOn(shadowJar)
     }
@@ -35,6 +40,18 @@ tasks {
         val props = mapOf("version" to version , "description" to project.description )
         filesMatching("plugin.yml") {
             expand(props)
+        }
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("mavenJava") {
+                // Using project.afterEvaluate delays this check until the shadow plugin finishes setting up
+                project.afterEvaluate {
+                    from(components["shadow"])
+                }
+                artifactId = project.name
+            }
         }
     }
 }
