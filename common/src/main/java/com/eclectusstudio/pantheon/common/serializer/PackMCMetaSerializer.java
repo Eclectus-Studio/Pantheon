@@ -72,21 +72,17 @@ public class PackMCMetaSerializer {
             );
         }
 
-        if (info.minFormat() != null) {
-            writeVersion(
-                    pack,
-                    "min_format",
-                    info.minFormat()
-            );
-        }
+        writeVersion(
+                pack,
+                "min_format",
+                info.format()
+        );
 
-        if (info.maxFormat() != null) {
-            writeVersion(
-                    pack,
-                    "max_format",
-                    info.maxFormat()
-            );
-        }
+        writeVersion(
+                pack,
+                "max_format",
+                info.format()
+        );
 
         if (info.supportedFormats() != null) {
             pack.add(
