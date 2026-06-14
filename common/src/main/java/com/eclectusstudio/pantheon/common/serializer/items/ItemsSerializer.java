@@ -15,15 +15,11 @@ public final class ItemsSerializer {
             ResourcePackItems items
     ) throws IOException {
 
-        Path itemModelsFolder = assetsFolder
-                .resolve("models")
-                .resolve("item");
-
         for (Map.Entry<ResourceLocation, ItemModels> entry :
                 items.getAllModels().entrySet()) {
 
             ItemSerializer.serialize(
-                    itemModelsFolder,
+                    assetsFolder,
                     entry.getKey(),
                     entry.getValue()
             );
