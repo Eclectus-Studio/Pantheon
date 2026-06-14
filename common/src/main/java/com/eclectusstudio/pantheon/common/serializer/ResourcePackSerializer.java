@@ -23,7 +23,7 @@ public class ResourcePackSerializer {
         );
 
         ItemsSerializer.serialize(
-                root.toPath(),
+                root.toPath().resolve("assets"),
                 pack.getItems()
         );
 
