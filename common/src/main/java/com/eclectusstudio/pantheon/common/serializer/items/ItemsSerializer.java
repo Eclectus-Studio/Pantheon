@@ -3,7 +3,6 @@ package com.eclectusstudio.pantheon.common.serializer.items;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.resource.items.ItemModels;
 import com.eclectusstudio.pantheon.common.resource.items.ResourcePackItems;
-import com.eclectusstudio.pantheon.common.serializer.items.ItemSerializer;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -16,11 +15,15 @@ public final class ItemsSerializer {
             ResourcePackItems items
     ) throws IOException {
 
+        Path itemModelsFolder = assetsFolder
+                .resolve("models")
+                .resolve("item");
+
         for (Map.Entry<ResourceLocation, ItemModels> entry :
                 items.getAllModels().entrySet()) {
 
             ItemSerializer.serialize(
-                    assetsFolder,
+                    itemModelsFolder,
                     entry.getKey(),
                     entry.getValue()
             );

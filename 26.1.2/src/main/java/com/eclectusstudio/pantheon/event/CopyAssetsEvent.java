@@ -1,15 +1,21 @@
 package com.eclectusstudio.pantheon.event;
 
-import com.eclectusstudio.pantheon.common.ResourcePack;
-import com.eclectusstudio.pantheon.common.ResourcePacks;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
-public class BuildResourcePackEvent extends Event {
+import java.io.File;
+
+public class CopyAssetsEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
+    private File packFolder;
 
-    public void buildResourcePack(ResourcePack pack){
-        ResourcePacks.addPack(pack);
+    public CopyAssetsEvent(File packFolder){
+        this.packFolder = packFolder;
+    }
+
+    public File getPackFolder() {
+        return packFolder;
     }
 
     @Override

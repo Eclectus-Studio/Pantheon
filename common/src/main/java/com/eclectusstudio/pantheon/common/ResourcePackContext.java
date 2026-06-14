@@ -1,93 +1,77 @@
 package com.eclectusstudio.pantheon.common;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.*;
+import java.security.CodeSource;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class ResourcePackContext {
+    public static void extractFolder(String resourceFolder, Path destination)
+            throws IOException, URISyntaxException, ClassNotFoundException {
 
-    private final File root;
-    private final ClassLoader loader;
+        Class<?> caller = getCallerClass();
 
-    public ResourcePackContext(File root, ClassLoader loader) {
-        this.root = root;
-        this.loader = loader;
-    }
+        if (!resourceFolder.endsWith("/")) {
+            resourceFolder += "/";
+        }
 
-    public void importFolder(String namespace, String jarPath) {
+        CodeSource codeSource =
+                caller.getProtectionDomain().getCodeSource();
 
-        try {
+        Path jarPath = Path.of(codeSource.getLocation().toURI());
 
-            Enumeration<URL> resources =
-                    loader.getResources(jarPath);
+        try (JarFile jar = new JarFile(jarPath.toFile())) {
 
-            while (resources.hasMoreElements()) {
+            var entries = jar.entries();
 
-                URL url = resources.nextElement();
+            while (entries.hasMoreElements()) {
+                JarEntry entry = entries.nextElement();
 
-                if (url.getProtocol().equals("jar")) {
+                String name = entry.getName();
 
-                    String path = url.getPath();
+                if (!name.startsWith(resourceFolder)) {
+                    continue;
+                }
 
-                    String jarFilePath =
-                            path.substring(5, path.indexOf("!"));
+                String relative = name.substring(resourceFolder.length());
 
-                    try (JarFile jar = new JarFile(jarFilePath)) {
+                if (relative.isEmpty()) {
+                    continue;
+                }
 
-                        Enumeration<JarEntry> entries =
-                                jar.entries();
+                Path target = destination.resolve(relative);
 
-                        while (entries.hasMoreElements()) {
+                if (entry.isDirectory()) {
+                    Files.createDirectories(target);
+                    continue;
+                }
 
-                            JarEntry entry = entries.nextElement();
+                Files.createDirectories(target.getParent());
 
-                            if (entry.isDirectory()) continue;
-
-                            if (!entry.getName().startsWith(jarPath)) continue;
-
-                            String relative =
-                                    entry.getName().substring(jarPath.length());
-
-                            copyEntry(
-                                    jar,
-                                    entry,
-                                    namespace,
-                                    relative
-                            );
-                        }
-                    }
+                try (InputStream in = jar.getInputStream(entry)) {
+                    Files.copy(in, target,
+                            StandardCopyOption.REPLACE_EXISTING);
                 }
             }
-
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to import jar folder: " + jarPath, e);
         }
     }
 
-    private void copyEntry(
-            JarFile jar,
-            JarEntry entry,
-            String namespace,
-            String relativePath
-    ) throws IOException {
+    private static Class<?> getCallerClass()
+            throws ClassNotFoundException {
 
-        InputStream in =
-                jar.getInputStream(entry);
+        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 
-        File out = new File(
-                root,
-                "assets/" + namespace + "/" + relativePath
-        );
+        // 0 = Thread.getStackTrace
+        // 1 = getCallerClass
+        // 2 = extractFolder
+        // 3 = actual caller
 
-        out.getParentFile().mkdirs();
+        String callerClassName = stack[3].getClassName();
 
-        Files.copy(
-                in,
-                out.toPath(),
-                StandardCopyOption.REPLACE_EXISTING
-        );
+        return Class.forName(callerClassName);
     }
 }

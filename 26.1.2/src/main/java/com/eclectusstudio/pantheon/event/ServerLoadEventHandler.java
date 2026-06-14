@@ -26,8 +26,14 @@ public class ServerLoadEventHandler implements Listener {
                 );
 
         FileUtils.deleteRecursively(packFolder);
-
         packFolder.mkdirs();
+
+        File assetsFolder = new File(packFolder, "assets");
+        assetsFolder.mkdirs();
+
+        Bukkit.getPluginManager().callEvent(
+                new CopyAssetsEvent(assetsFolder)
+        );
 
         for (ResourcePack pack : ResourcePacks.getPacks()) {
 
