@@ -9,12 +9,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
-public class PackMCMetaSerializer {
+public final class PackMCMetaSerializer {
 
     private static final Gson GSON =
             new GsonBuilder()
                     .setPrettyPrinting()
                     .create();
+
+    private PackMCMetaSerializer() {}
 
     public static void serialize(
             File packRoot,
@@ -23,73 +25,64 @@ public class PackMCMetaSerializer {
 
         JsonObject root = new JsonObject();
 
-        if (meta.getPack() != null) {
-            serializePack(root, meta.getPack());
-        }
+        serializePack(root, meta);
+        serializeFeatures(root, meta);
+        serializeFilter(root, meta);
+        serializeOverlays(root, meta);
+        serializeLanguages(root, meta);
 
-        if (meta.getFeatures() != null) {
-            serializeFeatures(root, meta.getFeatures());
-        }
+        File output =
+                new File(packRoot, "pack.mcmeta");
 
-        if (meta.getFilter() != null) {
-            serializeFilter(root, meta.getFilter());
-        }
+        try (FileWriter writer =
+                     new FileWriter(output)) {
 
-        if (meta.getOverlays() != null) {
-            serializeOverlays(root, meta.getOverlays());
-        }
-
-        if (meta.getLanguage() != null
-                && !meta.getLanguage().isEmpty()) {
-            serializeLanguages(root, meta.getLanguage());
-        }
-
-        File out = new File(packRoot, "pack.mcmeta");
-
-        try (FileWriter writer = new FileWriter(out)) {
             GSON.toJson(root, writer);
         }
     }
 
     private static void serializePack(
             JsonObject root,
-            PackInfo info
+            PackMCMeta meta
     ) {
 
         JsonObject pack = new JsonObject();
 
-        if (info.description() != null) {
+        if (meta.getDescription() != null) {
             pack.addProperty(
                     "description",
-                    info.description().toString()
+                    meta.getDescription()
             );
         }
 
-        if (info.packFormat() != null) {
+        if (meta.getPackFormat() != null) {
             pack.addProperty(
                     "pack_format",
-                    info.packFormat()
+                    meta.getPackFormat()
             );
         }
 
-        writeVersion(
-                pack,
-                "min_format",
-                info.format()
-        );
+        if (meta.getSupportedFormats() != null) {
 
-        writeVersion(
-                pack,
-                "max_format",
-                info.format()
-        );
+            FormatRange range =
+                    meta.getSupportedFormats();
 
-        if (info.supportedFormats() != null) {
+            if (range instanceof FormatInterval interval) {
+
+                pack.addProperty(
+                        "min_format",
+                        interval.minInclusive()
+                );
+
+                pack.addProperty(
+                        "max_format",
+                        interval.maxInclusive()
+                );
+            }
+
             pack.add(
                     "supported_formats",
-                    serializeFormatRange(
-                            info.supportedFormats()
-                    )
+                    serializeFormatRange(range)
             );
         }
 
@@ -98,152 +91,191 @@ public class PackMCMetaSerializer {
 
     private static void serializeFeatures(
             JsonObject root,
-            Features features
+            PackMCMeta meta
     ) {
 
-        if (features.enabled() == null
-                || features.enabled().isEmpty()) {
+        if (meta.getFeatures().isEmpty()) {
             return;
         }
 
-        JsonObject obj = new JsonObject();
+        JsonObject features =
+                new JsonObject();
 
-        JsonArray enabled = new JsonArray();
+        JsonArray enabled =
+                new JsonArray();
 
-        for (String feature : features.enabled()) {
+        for (String feature :
+                meta.getFeatures()) {
+
             enabled.add(feature);
         }
 
-        obj.add("enabled", enabled);
+        features.add(
+                "enabled",
+                enabled
+        );
 
-        root.add("features", obj);
+        root.add(
+                "features",
+                features
+        );
     }
 
     private static void serializeFilter(
             JsonObject root,
-            Filter filter
+            PackMCMeta meta
     ) {
 
-        if (filter.block() == null
-                || filter.block().isEmpty()) {
+        if (meta.getFilters().isEmpty()) {
             return;
         }
 
-        JsonObject obj = new JsonObject();
+        JsonObject filter =
+                new JsonObject();
 
-        JsonArray block = new JsonArray();
+        JsonArray block =
+                new JsonArray();
 
-        filter.block().forEach(location -> {
+        for (FilterRule rule :
+                meta.getFilters()) {
 
-            JsonObject entry = new JsonObject();
+            JsonObject entry =
+                    new JsonObject();
 
-            if (location.getNamespace() != null) {
+            if (rule.namespace() != null) {
                 entry.addProperty(
                         "namespace",
-                        location.getNamespace()
+                        rule.namespace()
                 );
             }
 
-            if (location.getPath() != null) {
+            if (rule.path() != null) {
                 entry.addProperty(
                         "path",
-                        location.getPath()
+                        rule.path()
                 );
             }
 
             block.add(entry);
-        });
+        }
 
-        obj.add("block", block);
+        filter.add(
+                "block",
+                block
+        );
 
-        root.add("filter", obj);
+        root.add(
+                "filter",
+                filter
+        );
     }
 
     private static void serializeOverlays(
             JsonObject root,
-            Overlays overlays
+            PackMCMeta meta
     ) {
-        JsonObject obj = new JsonObject();
 
-        JsonArray entries = new JsonArray();
+        if (meta.getOverlays().isEmpty()) {
+            return;
+        }
+
+        JsonObject overlays =
+                new JsonObject();
+
+        JsonArray entries =
+                new JsonArray();
 
         for (OverlayEntry overlay :
-                overlays.entries()) {
+                meta.getOverlays()) {
 
-            JsonObject entry = new JsonObject();
+            JsonObject entry =
+                    new JsonObject();
 
             entry.addProperty(
                     "directory",
                     overlay.directory()
             );
 
-            writeVersion(
-                    entry,
-                    "min_format",
-                    overlay.version()
-            );
+            if (overlay.formats() instanceof
+                    FormatInterval interval) {
 
-            writeVersion(
-                    entry,
-                    "max_format",
-                    overlay.version()
-            );
+                entry.addProperty(
+                        "min_format",
+                        interval.minInclusive()
+                );
 
-            if (overlay.formats() != null) {
-                entry.add(
-                        "formats",
-                        serializeFormatRange(
-                                overlay.formats()
-                        )
+                entry.addProperty(
+                        "max_format",
+                        interval.maxInclusive()
                 );
             }
+
+            entry.add(
+                    "formats",
+                    serializeFormatRange(
+                            overlay.formats()
+                    )
+            );
 
             entries.add(entry);
         }
 
-        obj.add("entries", entries);
+        overlays.add(
+                "entries",
+                entries
+        );
 
-        root.add("overlays", obj);
+        root.add(
+                "overlays",
+                overlays
+        );
     }
 
     private static void serializeLanguages(
             JsonObject root,
-            Map<String, LanguageDefinition> languages
+            PackMCMeta meta
     ) {
+
+        Map<String, LanguageDefinition> languages =
+                meta.getLanguages();
 
         if (languages.isEmpty()) {
             return;
         }
 
-        JsonObject language = new JsonObject();
+        JsonObject language =
+                new JsonObject();
 
-        languages.forEach((code, definition) -> {
+        languages.forEach((code, def) -> {
 
-            JsonObject lang = new JsonObject();
+            JsonObject lang =
+                    new JsonObject();
 
-            if (definition.name() != null) {
-                lang.addProperty(
-                        "name",
-                        definition.name()
-                );
-            }
+            lang.addProperty(
+                    "name",
+                    def.name()
+            );
 
-            if (definition.region() != null) {
-                lang.addProperty(
-                        "region",
-                        definition.region()
-                );
-            }
+            lang.addProperty(
+                    "region",
+                    def.region()
+            );
 
             lang.addProperty(
                     "bidirectional",
-                    definition.bidirectional()
+                    def.bidirectional()
             );
 
-            language.add(code, lang);
+            language.add(
+                    code,
+                    lang
+            );
         });
 
-        root.add("language", language);
+        root.add(
+                "language",
+                language
+        );
     }
 
     private static JsonElement serializeFormatRange(
@@ -256,35 +288,27 @@ public class PackMCMetaSerializer {
             );
         }
 
-        FormatInterval interval =
-                (FormatInterval) range;
+        if (range instanceof FormatInterval interval) {
 
-        JsonObject obj = new JsonObject();
+            JsonObject obj =
+                    new JsonObject();
 
-        obj.addProperty(
-                "min_inclusive",
-                interval.minInclusive()
+            obj.addProperty(
+                    "min_inclusive",
+                    interval.minInclusive()
+            );
+
+            obj.addProperty(
+                    "max_inclusive",
+                    interval.maxInclusive()
+            );
+
+            return obj;
+        }
+
+        throw new IllegalStateException(
+                "Unknown format range type: "
+                        + range.getClass()
         );
-
-        obj.addProperty(
-                "max_inclusive",
-                interval.maxInclusive()
-        );
-
-        return obj;
-    }
-
-    private static void writeVersion(
-            JsonObject parent,
-            String key,
-            Version version
-    ) {
-
-        JsonArray arr = new JsonArray();
-
-        arr.add(version.major());
-        arr.add(version.minor());
-
-        parent.add(key, arr);
     }
 }

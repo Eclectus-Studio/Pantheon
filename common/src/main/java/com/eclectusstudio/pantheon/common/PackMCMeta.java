@@ -2,15 +2,19 @@ package com.eclectusstudio.pantheon.common;
 
 import com.eclectusstudio.pantheon.common.pack.*;
 
-import java.util.Map;
+import java.util.*;
 
 public final class PackMCMeta {
 
-    private PackInfo pack;
-    private Features features;
-    private Filter filter;
-    private Overlays overlays;
-    private Map<String, LanguageDefinition> language;
+    private String description;
+
+    private Integer packFormat;
+    private FormatRange supportedFormats;
+
+    private final List<String> features = new ArrayList<>();
+    private final List<FilterRule> filters = new ArrayList<>();
+    private final List<OverlayEntry> overlays = new ArrayList<>();
+    private final Map<String, LanguageDefinition> languages = new LinkedHashMap<>();
 
     private PackMCMeta() {}
 
@@ -22,28 +26,72 @@ public final class PackMCMeta {
 
         private final PackMCMeta meta = new PackMCMeta();
 
-        public Builder pack(PackInfo pack) {
-            meta.pack = pack;
+        public Builder description(String description) {
+            meta.description = description;
             return this;
         }
 
-        public Builder features(Features features) {
-            meta.features = features;
+        public Builder packFormat(int format) {
+            meta.packFormat = format;
             return this;
         }
 
-        public Builder filter(Filter filter) {
-            meta.filter = filter;
+        public Builder supports(int minFormat, int maxFormat) {
+            meta.supportedFormats = new FormatInterval(
+                    minFormat,
+                    maxFormat
+            );
             return this;
         }
 
-        public Builder overlays(Overlays overlays) {
-            meta.overlays = overlays;
+        public Builder addFeature(String featureFlag) {
+            meta.features.add(featureFlag);
             return this;
         }
 
-        public Builder language(Map<String, LanguageDefinition> language) {
-            meta.language = language;
+        public Builder addFilter(String namespaceRegex, String pathRegex) {
+            meta.filters.add(
+                    new FilterRule(
+                            namespaceRegex,
+                            pathRegex
+                    )
+            );
+            return this;
+        }
+
+        public Builder addOverlay(
+                String directory,
+                int minFormat,
+                int maxFormat
+        ) {
+            meta.overlays.add(
+                    new OverlayEntry(
+                            directory,
+                            new FormatInterval(
+                                    minFormat,
+                                    maxFormat
+                            )
+                    )
+            );
+
+            return this;
+        }
+
+        public Builder addLanguage(
+                String code,
+                String name,
+                String region,
+                boolean bidirectional
+        ) {
+            meta.languages.put(
+                    code,
+                    new LanguageDefinition(
+                            name,
+                            region,
+                            bidirectional
+                    )
+            );
+
             return this;
         }
 
@@ -52,23 +100,31 @@ public final class PackMCMeta {
         }
     }
 
-    public PackInfo getPack() {
-        return pack;
+    public String getDescription() {
+        return description;
     }
 
-    public Features getFeatures() {
-        return features;
+    public Integer getPackFormat() {
+        return packFormat;
     }
 
-    public Filter getFilter() {
-        return filter;
+    public FormatRange getSupportedFormats() {
+        return supportedFormats;
     }
 
-    public Overlays getOverlays() {
-        return overlays;
+    public List<String> getFeatures() {
+        return Collections.unmodifiableList(features);
     }
 
-    public Map<String, LanguageDefinition> getLanguage() {
-        return language;
+    public List<FilterRule> getFilters() {
+        return Collections.unmodifiableList(filters);
+    }
+
+    public List<OverlayEntry> getOverlays() {
+        return Collections.unmodifiableList(overlays);
+    }
+
+    public Map<String, LanguageDefinition> getLanguages() {
+        return Collections.unmodifiableMap(languages);
     }
 }
