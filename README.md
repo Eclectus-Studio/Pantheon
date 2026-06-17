@@ -1,4 +1,4 @@
-# Pantheon
+![Logo Banner](assets/banner.png)
 
 A powerful, developer-first Minecraft plugin framework designed to handle custom items, blocks, data pack logic, and dynamic resource pack generation entirely through a Java API. 
 
