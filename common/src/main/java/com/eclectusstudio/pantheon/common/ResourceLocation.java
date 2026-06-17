@@ -19,6 +19,25 @@ public class ResourceLocation {
         return path;
     }
 
+    public static ResourceLocation fromString(
+            String value
+    ) {
+
+        String[] split =
+                value.split(":", 2);
+
+        if (split.length != 2) {
+            throw new IllegalArgumentException(
+                    "Invalid resource location: " + value
+            );
+        }
+
+        return new ResourceLocation(
+                split[0],
+                split[1]
+        );
+    }
+
     // Crucial for HashMap lookups
     @Override
     public boolean equals(Object o) {
