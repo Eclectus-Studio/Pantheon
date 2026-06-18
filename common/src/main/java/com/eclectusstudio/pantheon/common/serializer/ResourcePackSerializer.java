@@ -19,7 +19,7 @@ public class ResourcePackSerializer {
 
         PackMCMetaSerializer.serialize(
                 root,
-                pack.getPackMCMeta()
+                pack.getMetadata()
         );
 
         ItemsSerializer.serialize(

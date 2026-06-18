@@ -5,6 +5,7 @@ import com.eclectusstudio.pantheon.common.ResourcePack;
 import com.eclectusstudio.pantheon.common.ResourcePacks;
 import com.eclectusstudio.pantheon.common.serializer.ResourcePackSerializer;
 import com.eclectusstudio.pantheon.common.utils.ResourcePackZipper;
+import com.eclectusstudio.pantheon.registry.ItemRegistry;
 import com.eclectusstudio.pantheon.utils.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -34,6 +35,12 @@ public class ServerLoadEventHandler implements Listener {
         Bukkit.getPluginManager().callEvent(
                 new CopyAssetsEvent(assetsFolder)
         );
+
+        Bukkit.getPluginManager().callEvent(
+                new SubmitItemsEvent()
+        );
+
+        ItemRegistry.lock();
 
         for (ResourcePack pack : ResourcePacks.getPacks()) {
 

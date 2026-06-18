@@ -1,6 +1,6 @@
 subprojects {
     group = 'com.eclectusstudio'
-    version = 'Alpha-0.1.0'
+    version = 'Alpha-0.1.1'
 
     apply plugin: 'java'
     apply plugin: 'maven-publish'
