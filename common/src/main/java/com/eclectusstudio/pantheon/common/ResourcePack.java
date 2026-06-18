@@ -1,6 +1,5 @@
 package com.eclectusstudio.pantheon.common;
 
-import com.eclectusstudio.pantheon.common.pack.*;
 import com.eclectusstudio.pantheon.common.resource.items.ItemModels;
 import com.eclectusstudio.pantheon.common.resource.items.ResourcePackItems;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
@@ -14,8 +13,8 @@ public final class ResourcePack {
     private final ResourcePackItems items;
     private final Map<ResourceLocation, ItemModelDefinition> models;
 
-    public ResourcePack() {
-        this.metadata = PackMCMeta.builder().build();
+    public ResourcePack(PackMCMeta meta) {
+        this.metadata=meta;
         this.items = new ResourcePackItems();
         this.models = new HashMap<>();
     }
