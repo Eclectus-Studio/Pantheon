@@ -12,6 +12,8 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:26.1.2.build.70-stable")
     shadow(project(":common"))
+    shadow("commons-codec:commons-codec:1.22.0")
+
 }
 
 java {

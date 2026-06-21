@@ -1,0 +1,6 @@
+pack-hosting-enabled: false
+pack-hosting-port: 8080
+
+# Public hostname/IP players should connect to.
+# Do NOT include protocol or port.
+pack-hosting-address: localhost
