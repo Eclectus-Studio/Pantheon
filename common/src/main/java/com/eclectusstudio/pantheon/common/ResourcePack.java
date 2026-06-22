@@ -1,5 +1,7 @@
 package com.eclectusstudio.pantheon.common;
 
+import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
+import com.eclectusstudio.pantheon.common.resource.equipment.Equipments;
 import com.eclectusstudio.pantheon.common.resource.items.ItemModels;
 import com.eclectusstudio.pantheon.common.resource.items.ResourcePackItems;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
@@ -12,9 +14,11 @@ public final class ResourcePack {
     private final PackMCMeta metadata;
     private final ResourcePackItems items;
     private final Map<ResourceLocation, ItemModelDefinition> models;
+    private final Equipments equipments;
 
-    public ResourcePack(PackMCMeta meta) {
+    public ResourcePack(PackMCMeta meta, Equipments equipments) {
         this.metadata=meta;
+        this.equipments = equipments;
         this.items = new ResourcePackItems();
         this.models = new HashMap<>();
     }
@@ -49,6 +53,13 @@ public final class ResourcePack {
         return this;
     }
 
+    public ResourcePack addEquipment(
+            Equipment equipment
+    ) {
+        equipments.addEquipement(equipment);
+        return this;
+    }
+
     /*
      * Getters
      */
@@ -63,5 +74,9 @@ public final class ResourcePack {
 
     public Map<ResourceLocation, ItemModelDefinition> getModels() {
         return models;
+    }
+
+    public Equipments getEquipments() {
+        return equipments;
     }
 }

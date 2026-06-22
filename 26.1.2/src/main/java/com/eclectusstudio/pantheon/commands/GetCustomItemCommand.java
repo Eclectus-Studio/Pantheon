@@ -45,7 +45,7 @@ public class GetCustomItemCommand implements CommandExecutor, TabCompleter {
         }
 
         player.getInventory().addItem(
-                BuildItem.buildItem(item)
+                item.createStack()
         );
 
         player.sendMessage("Given " + item.getId());

@@ -16,6 +16,22 @@ public class EquipmentLayer {
 
     public EquipmentLayer(
             ResourceLocation texture,
+            DyeableEquipmentLayer dyeable
+    ) {
+        this.texture = texture;
+        this.dyeable = dyeable;
+    }
+
+    public EquipmentLayer(
+            ResourceLocation texture,
+            boolean usePlayerTexture
+    ) {
+        this.texture = texture;
+        this.usePlayerTexture = usePlayerTexture;
+    }
+
+    public EquipmentLayer(
+            ResourceLocation texture,
             DyeableEquipmentLayer dyeable,
             boolean usePlayerTexture
     ) {

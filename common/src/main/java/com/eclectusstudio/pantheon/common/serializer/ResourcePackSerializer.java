@@ -2,7 +2,9 @@ package com.eclectusstudio.pantheon.common.serializer;
 
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.ResourcePack;
+import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
+import com.eclectusstudio.pantheon.common.serializer.equipment.EquipmentSerializer;
 import com.eclectusstudio.pantheon.common.serializer.items.ItemsSerializer;
 import com.eclectusstudio.pantheon.common.serializer.models.ModelSerializer;
 
@@ -37,7 +39,16 @@ public class ResourcePackSerializer {
             );
         }
 
+        for (Equipment equipment : pack.getEquipments().getEquipment()) {
+
+            EquipmentSerializer.serialize(
+                    root.toPath().resolve("assets"),
+                    equipment.getLocation().getNamespace(),
+                    equipment.getLocation().getPath(),
+                    equipment
+            );
+        }
+
         // LanguageSerializer.serialize(...)
-        // TextureSerializer.serialize(...)
     }
 }
