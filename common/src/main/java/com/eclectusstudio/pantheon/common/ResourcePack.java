@@ -16,9 +16,9 @@ public final class ResourcePack {
     private final Map<ResourceLocation, ItemModelDefinition> models;
     private final Equipments equipments;
 
-    public ResourcePack(PackMCMeta meta, Equipments equipments) {
+    public ResourcePack(PackMCMeta meta) {
         this.metadata=meta;
-        this.equipments = equipments;
+        this.equipments = new Equipments();
         this.items = new ResourcePackItems();
         this.models = new HashMap<>();
     }
