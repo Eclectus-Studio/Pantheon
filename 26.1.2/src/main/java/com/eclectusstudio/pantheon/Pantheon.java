@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 
+@Deprecated
 public final class Pantheon extends JavaPlugin {
     public static Pantheon pantheon;
     public static NamespacedKey customItemKey = new NamespacedKey("pantheon", "custom-item");
