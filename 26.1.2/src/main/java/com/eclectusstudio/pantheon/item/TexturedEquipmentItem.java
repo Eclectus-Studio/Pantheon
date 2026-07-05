@@ -5,6 +5,7 @@ import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.EquippableComponent;
@@ -17,6 +18,8 @@ import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 public class TexturedEquipmentItem extends Item {
 
     private final Equipment equipment;
+
+    private final EquipmentSlotGroup slotGroup;
 
     private Sound equipSound;
     private Sound shearingSound;
@@ -33,10 +36,11 @@ public class TexturedEquipmentItem extends Item {
     protected TexturedEquipmentItem(
             ResourceLocation id,
             ItemStack itemStack,
-            Equipment equipment
+            Equipment equipment, EquipmentSlotGroup slotGroup
     ) {
         super(id, itemStack);
         this.equipment = equipment;
+        this.slotGroup = slotGroup;
     }
 
     public Equipment getEquipment() {
@@ -158,6 +162,7 @@ public class TexturedEquipmentItem extends Item {
                         shearingSound
                 );
             }
+
 
             meta.setEquippable(equippable);
         }

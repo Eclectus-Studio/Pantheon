@@ -1,0 +1,8 @@
+{
+  "id": "pantheon",
+  "name": "Pantheon",
+  "version": "${version}",
+  "main": "com.eclectusstudio.pantheon.Pantheon"
+  ,"description": "Pantheon Custom Item Engine"
+  ,"authors": ["Eclectus Studio"]
+}
