@@ -1,6 +1,11 @@
 package com.eclectusstudio.pantheon.event;
 
-import com.velocitypowered.api.event.ResultedEvent;
+import com.eclectusstudio.pantheon.common.ResourcePack;
+import com.eclectusstudio.pantheon.common.ResourcePacks;
 
-public class BuildResourcePackEvent{
+public final class BuildResourcePackEvent {
+
+    public void buildResourcePack(ResourcePack pack) {
+        ResourcePacks.addPack(pack);
+    }
 }

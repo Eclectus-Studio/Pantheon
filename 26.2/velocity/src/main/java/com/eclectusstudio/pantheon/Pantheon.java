@@ -1,5 +1,6 @@
 package com.eclectusstudio.pantheon;
 
+import com.eclectusstudio.pantheon.event.ServerLoadEventHandler;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -8,6 +9,8 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import org.slf4j.Logger;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Plugin(
@@ -35,14 +38,16 @@ public class Pantheon {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        logger.info("Pantheon has started!");
-
-        // Create the data folder if it doesn't exist
         try {
-            java.nio.file.Files.createDirectories(dataDirectory);
-        } catch (Exception e) {
+            Files.createDirectories(dataDirectory);
+        } catch (IOException e) {
             logger.error("Failed to create plugin data folder.", e);
+            return;
         }
+
+        Config.init(this);
+
+        server.getEventManager().register(this, new ServerLoadEventHandler(this));
     }
 
     public ProxyServer getServer() {
