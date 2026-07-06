@@ -1,5 +1,6 @@
 package com.eclectusstudio.pantheon;
 
+import com.eclectusstudio.pantheon.event.PlayerJoinEventHandler;
 import com.eclectusstudio.pantheon.event.ServerLoadEventHandler;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
@@ -48,6 +49,7 @@ public class Pantheon {
         Config.init(this);
 
         server.getEventManager().register(this, new ServerLoadEventHandler(this));
+        server.getEventManager().register(this, new PlayerJoinEventHandler(this));
     }
 
     public ProxyServer getServer() {
