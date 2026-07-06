@@ -20,6 +20,10 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(25)
 }
 
+tasks.jar {
+    archiveBaseName.set("pantheon-paper")
+}
+
 tasks {
     shadowJar {
         configurations.set(listOf(project.configurations.shadow.get()))

@@ -20,6 +20,10 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
+tasks.jar {
+    archiveBaseName.set("pantheon-velocity")
+}
+
 tasks {
     build {
         dependsOn(shadowJar)

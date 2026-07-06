@@ -18,6 +18,10 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(25)
 }
 
+tasks.jar {
+    archiveBaseName.set("pantheon-paper")
+}
+
 tasks {
     build {
         dependsOn(shadowJar)
