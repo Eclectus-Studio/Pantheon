@@ -2,5 +2,6 @@ rootProject.name = "Pantheon"
 
 include 'common'
 include '26.1.2'
+include '26.2'
 include '26.2:paper'
 include '26.2:velocity'
