@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 
 @Plugin(
         id = "pantheon",
@@ -48,8 +49,14 @@ public class Pantheon {
 
         Config.init(this);
 
-        server.getEventManager().register(this, new ServerLoadEventHandler(this));
         server.getEventManager().register(this, new PlayerJoinEventHandler(this));
+
+        ServerLoadEventHandler handler = new ServerLoadEventHandler(this);
+
+        server.getScheduler()
+                .buildTask(this, handler::buildResourcePack)
+                .delay(Duration.ofMillis(500))
+                .schedule();
     }
 
     public ProxyServer getServer() {

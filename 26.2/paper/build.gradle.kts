@@ -10,8 +10,8 @@ repositories {
 
 dependencies {
     paperweight.paperDevBundle("26.2.build.+")
-    shadow(project(":common"))
-    shadow("commons-codec:commons-codec:1.22.0")
+    implementation(project(":common"))
+    implementation("commons-codec:commons-codec:1.22.0")
 }
 
 java {

@@ -12,8 +12,8 @@ repositories {
 
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.5.0-SNAPSHOT")
-    shadow(project(":common"))
-    shadow("commons-codec:commons-codec:1.22.0")
+    implementation(project(":common"))
+    implementation("commons-codec:commons-codec:1.22.0")
 }
 
 java {

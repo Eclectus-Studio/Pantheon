@@ -10,8 +10,6 @@ import com.eclectusstudio.pantheon.common.utils.ResourcePackZipper;
 import com.eclectusstudio.pantheon.utils.FileUtils;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.File;
@@ -29,8 +27,7 @@ public class ServerLoadEventHandler {
         this.plugin = plugin;
     }
 
-    @Subscribe
-    public void onProxyInitialize(ProxyInitializeEvent event) {
+    public void buildResourcePack() {
 
         plugin.getServer().getEventManager()
                 .fire(new BuildResourcePackEvent())
@@ -47,7 +44,6 @@ public class ServerLoadEventHandler {
         plugin.getServer().getEventManager()
                 .fire(new CopyAssetsEvent(assetsFolder))
                 .join();
-
 
         for (ResourcePack pack : ResourcePacks.getPacks()) {
             try {
@@ -73,7 +69,7 @@ public class ServerLoadEventHandler {
             startPackHosting(packFile);
 
             HostedPack.set(
-                    "https://" + Config.PackHostingAddress + ":" + Config.PackHostingPort + "/resourcepack.zip",
+                    "http://" + Config.PackHostingAddress + ":" + Config.PackHostingPort + "/resourcepack.zip",
                     sha1(packFile)
             );
 
