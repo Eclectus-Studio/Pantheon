@@ -1,5 +1,6 @@
 package com.eclectusstudio.pantheon.common;
 
+import com.eclectusstudio.pantheon.common.resource.fonts.Font;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipments;
 import com.eclectusstudio.pantheon.common.resource.items.ItemModels;
@@ -12,16 +13,25 @@ import java.util.Map;
 public final class ResourcePack {
 
     private final PackMCMeta metadata;
+
     private final ResourcePackItems items;
     private final Map<ResourceLocation, ItemModelDefinition> models;
     private final Equipments equipments;
 
+    private final Map<ResourceLocation, Font> fonts;
+
+
     public ResourcePack(PackMCMeta meta) {
-        this.metadata=meta;
+
+        this.metadata = meta;
+
         this.equipments = new Equipments();
         this.items = new ResourcePackItems();
         this.models = new HashMap<>();
+
+        this.fonts = new HashMap<>();
     }
+
 
     /*
      * Assets
@@ -40,6 +50,7 @@ public final class ResourcePack {
         return this;
     }
 
+
     public ResourcePack addModel(
             ResourceLocation id,
             ItemModelDefinition model
@@ -53,12 +64,30 @@ public final class ResourcePack {
         return this;
     }
 
+
     public ResourcePack addEquipment(
             Equipment equipment
     ) {
+
         equipments.addEquipement(equipment);
+
         return this;
     }
+
+
+    public ResourcePack addFont(
+            ResourceLocation id,
+            Font font
+    ) {
+
+        fonts.put(
+                id,
+                font
+        );
+
+        return this;
+    }
+
 
     /*
      * Getters
@@ -78,5 +107,9 @@ public final class ResourcePack {
 
     public Equipments getEquipments() {
         return equipments;
+    }
+
+    public Map<ResourceLocation, Font> getFonts() {
+        return fonts;
     }
 }

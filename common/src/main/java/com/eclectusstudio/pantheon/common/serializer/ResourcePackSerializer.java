@@ -3,8 +3,10 @@ package com.eclectusstudio.pantheon.common.serializer;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.ResourcePack;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
+import com.eclectusstudio.pantheon.common.resource.fonts.Font;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
 import com.eclectusstudio.pantheon.common.serializer.equipment.EquipmentSerializer;
+import com.eclectusstudio.pantheon.common.serializer.font.FontSerializer;
 import com.eclectusstudio.pantheon.common.serializer.items.ItemsSerializer;
 import com.eclectusstudio.pantheon.common.serializer.models.ModelSerializer;
 
@@ -46,6 +48,17 @@ public class ResourcePackSerializer {
                     equipment.getLocation().getNamespace(),
                     equipment.getLocation().getPath(),
                     equipment
+            );
+        }
+
+        for (Map.Entry<ResourceLocation, Font> entry :
+                pack.getFonts().entrySet()) {
+
+            FontSerializer.serialize(
+                    root.toPath().resolve("assets"),
+                    entry.getKey().getNamespace(),
+                    entry.getKey().getPath(),
+                    entry.getValue()
             );
         }
 
