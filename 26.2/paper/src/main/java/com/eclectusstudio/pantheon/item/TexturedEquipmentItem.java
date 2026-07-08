@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.persistence.PersistentDataType;
@@ -17,9 +18,7 @@ import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 
 public class TexturedEquipmentItem extends Item {
 
-    private final Equipment equipment;
-
-    private final EquipmentSlotGroup slotGroup;
+    private final ResourceLocation equipmentResourceLocation;
 
     private Sound equipSound;
     private Sound shearingSound;
@@ -33,18 +32,30 @@ public class TexturedEquipmentItem extends Item {
     private boolean equipOnInteract = false;
     private boolean canBeSheared = false;
 
-    protected TexturedEquipmentItem(
+    // New parameters for durability and repairs
+    private Integer maxDurability = null;
+    private ItemStack repairIngredient = null;
+
+    public TexturedEquipmentItem(
             ResourceLocation id,
             ItemStack itemStack,
-            Equipment equipment, EquipmentSlotGroup slotGroup
+            Equipment equipment
     ) {
         super(id, itemStack);
-        this.equipment = equipment;
-        this.slotGroup = slotGroup;
+        this.equipmentResourceLocation = equipment.getLocation();
     }
 
-    public Equipment getEquipment() {
-        return equipment;
+    public TexturedEquipmentItem(
+            ResourceLocation id,
+            ItemStack itemStack,
+            ResourceLocation equipmentResourceLocation
+    ) {
+        super(id, itemStack);
+        this.equipmentResourceLocation = equipmentResourceLocation;
+    }
+
+    public ResourceLocation getEquipmentResourceLocation() {
+        return equipmentResourceLocation;
     }
 
     public Sound getEquipSound() {
@@ -123,28 +134,63 @@ public class TexturedEquipmentItem extends Item {
         this.canBeSheared = canBeSheared;
     }
 
+    // Getters and Setters for Durability & Repairs
+    public Integer getMaxDurability() {
+        return maxDurability;
+    }
+
+    public void setMaxDurability(Integer maxDurability) {
+        this.maxDurability = maxDurability;
+    }
+
+    public ItemStack getRepairIngredient() {
+        return repairIngredient;
+    }
+
+    public void setRepairIngredient(ItemStack repairIngredient) {
+        this.repairIngredient = repairIngredient;
+    }
+
     @Override
     public ItemStack createStack() {
         ItemStack stack = getItemStack().clone();
-
         ItemMeta meta = stack.getItemMeta();
+
+        if (meta == null) {
+            return stack;
+        }
 
         meta.setItemModel(toKey(getId()));
 
+        // Handle Max Durability Component via Damageable Meta interface
+        if (maxDurability != null) {
+            if (meta instanceof Damageable damageable) {
+                // If it natively supports damage (Sword, Elytra, etc.)
+                damageable.setMaxDamage(maxDurability);
+            } else {
+                // For non-damageable items (e.g., Paper, Gold Nugget, Stick),
+                // we use modern Paper Data Components to force it to have durability.
+                stack.setData(io.papermc.paper.datacomponent.DataComponentTypes.MAX_DAMAGE, maxDurability);
+
+                // Refresh meta to recognize the newly injected data component
+                meta = stack.getItemMeta();
+            }
+        }
+
+        // Handle Anvil Repair Ingredients Component via standard meta interface
+        if (repairIngredient != null) {
+            stack.isRepairableBy(repairIngredient);
+        }
+
+        // Handle Equippable Component
         EquippableComponent equippable = meta.getEquippable();
-
         if (equippable != null) {
-
             if (equipSound != null) {
-                equippable.setEquipSound(
-                        equipSound
-                );
+                equippable.setEquipSound(equipSound);
             }
 
             if (cameraOverlay != null) {
-                equippable.setCameraOverlay(
-                        toKey(cameraOverlay)
-                );
+                equippable.setCameraOverlay(toKey(cameraOverlay));
             }
 
             if (allowedEntities != null) {
@@ -158,11 +204,8 @@ public class TexturedEquipmentItem extends Item {
             equippable.setCanBeSheared(canBeSheared);
 
             if (shearingSound != null) {
-                equippable.setShearingSound(
-                        shearingSound
-                );
+                equippable.setShearingSound(shearingSound);
             }
-
 
             meta.setEquippable(equippable);
         }
@@ -174,7 +217,6 @@ public class TexturedEquipmentItem extends Item {
         );
 
         stack.setItemMeta(meta);
-
         return stack;
     }
 }
