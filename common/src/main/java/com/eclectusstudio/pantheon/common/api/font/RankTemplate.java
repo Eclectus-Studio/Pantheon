@@ -8,7 +8,7 @@ public class RankTemplate {
     private final char character;
     private final ResourceLocation texture;
 
-    private int ascent = 7;
+    private int ascent = 8;
     private int height = 8;
 
 
