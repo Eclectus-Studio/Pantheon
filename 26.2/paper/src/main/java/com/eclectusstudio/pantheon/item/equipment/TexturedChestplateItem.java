@@ -11,18 +11,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 
-public class TexturedWingsItem extends TexturedEquipmentItem {
-
-    public TexturedWingsItem(ResourceLocation id,
-                             ItemStack itemStack,
-                             ResourceLocation equipmentResourceLocation) {
+public class TexturedChestplateItem extends TexturedEquipmentItem {
+    public TexturedChestplateItem(ResourceLocation id, ItemStack itemStack, ResourceLocation equipmentResourceLocation) {
         super(id, itemStack, equipmentResourceLocation);
 
-        // Default Wing Settings
         this.setDamageOnHurt(true);
         this.setEquipOnInteract(true);
-        this.setMaxDurability(432);
-        this.setRepairIngredient(ItemStack.of(Material.PHANTOM_MEMBRANE));
+        this.setMaxDurability(1000);
+        this.setRepairIngredient(ItemStack.of(Material.IRON_INGOT));
     }
 
     @Override
@@ -39,8 +35,8 @@ public class TexturedWingsItem extends TexturedEquipmentItem {
 
         // 3. Apply the custom 3D Equipment Model/Texture
         Equippable equippableComponent = Equippable.equippable(EquipmentSlot.CHEST)
-                        .assetId(toKey(getEquipmentResourceLocation()))
-                                .build();
+                .assetId(toKey(getEquipmentResourceLocation()))
+                .build();
 
         stack.setData(DataComponentTypes.EQUIPPABLE, equippableComponent);
 
