@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,13 +38,41 @@ public final class EquipmentSerializer {
 
         Files.createDirectories(file.getParent());
 
-        JsonObject root = new JsonObject();
-        JsonObject layersObject = new JsonObject();
+        // Load existing data exists
+        JsonObject root;
+        if (Files.exists(file)) {
+            try (var reader = Files.newBufferedReader(file)) {
+                root = JsonParser.parseReader(reader).getAsJsonObject();
+            } catch (Exception e) {
+                // If the file is corrupted/empty, fallback to a clean object
+                root = new JsonObject();
+            }
+        } else {
+            root = new JsonObject();
+        }
 
+        JsonObject layersObject;
+        if (root.has("layers") && root.get("layers").isJsonObject()) {
+            layersObject = root.getAsJsonObject("layers");
+        } else {
+            layersObject = new JsonObject();
+            root.add("layers", layersObject);
+        }
+
+        // Process and merge incoming layers
         for (Map.Entry<EquipmentLayerType, List<EquipmentLayer>> entry
                 : equipment.getLayers().entrySet()) {
 
-            JsonArray layerArray = new JsonArray();
+            String layerKey = entry.getKey().getId();
+
+            // Get the existing array for this layer type (e.g., "humanoid"), or create a new one
+            JsonArray layerArray;
+            if (layersObject.has(layerKey) && layersObject.get(layerKey).isJsonArray()) {
+                layerArray = layersObject.getAsJsonArray(layerKey);
+            } else {
+                layerArray = new JsonArray();
+                layersObject.add(layerKey, layerArray);
+            }
 
             for (EquipmentLayer layer : entry.getValue()) {
 
@@ -80,19 +109,10 @@ public final class EquipmentSerializer {
                     );
                 }
 
+                // Append the new layer to the existing array
                 layerArray.add(layerObject);
             }
-
-            layersObject.add(
-                    entry.getKey().getId(),
-                    layerArray
-            );
         }
-
-        root.add(
-                "layers",
-                layersObject
-        );
 
         Files.writeString(
                 file,
