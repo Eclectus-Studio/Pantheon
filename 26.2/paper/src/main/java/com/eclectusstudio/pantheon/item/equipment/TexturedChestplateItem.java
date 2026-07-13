@@ -23,7 +23,6 @@ public class TexturedChestplateItem extends TexturedEquipmentItem {
 
     @Override
     public ItemStack createStack() {
-        // 1. Run the superclass to handle Model, Durability, Repairs, and basic Equippable settings
         ItemStack stack = super.createStack();
         ItemMeta meta = stack.getItemMeta();
 
@@ -31,9 +30,6 @@ public class TexturedChestplateItem extends TexturedEquipmentItem {
             return stack;
         }
 
-        stack.setData(DataComponentTypes.GLIDER);
-
-        // 3. Apply the custom 3D Equipment Model/Texture
         Equippable equippableComponent = Equippable.equippable(EquipmentSlot.CHEST)
                 .assetId(toKey(getEquipmentResourceLocation()))
                 .build();

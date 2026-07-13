@@ -169,15 +169,14 @@ public class TexturedEquipmentItem extends Item {
                 damageable.setMaxDamage(maxDurability);
             } else {
                 // For non-damageable items (e.g., Paper, Gold Nugget, Stick),
-                // we use modern Paper Data Components to force it to have durability.
                 stack.setData(io.papermc.paper.datacomponent.DataComponentTypes.MAX_DAMAGE, maxDurability);
 
-                // Refresh meta to recognize the newly injected data component
+                // Refresh meta
                 meta = stack.getItemMeta();
             }
         }
 
-        // Handle Anvil Repair Ingredients Component via standard meta interface
+        // Anvil Repair Ingredients
         if (repairIngredient != null) {
             stack.isRepairableBy(repairIngredient);
         }
