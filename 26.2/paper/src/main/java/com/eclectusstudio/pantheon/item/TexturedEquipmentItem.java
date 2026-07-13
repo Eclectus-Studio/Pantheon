@@ -201,6 +201,7 @@ public class TexturedEquipmentItem extends Item {
             equippable.setDamageOnHurt(damageOnHurt);
             equippable.setEquipOnInteract(equipOnInteract);
             equippable.setCanBeSheared(canBeSheared);
+            equippable.setModel(toKey(equipmentResourceLocation));
 
             if (shearingSound != null) {
                 equippable.setShearingSound(shearingSound);
