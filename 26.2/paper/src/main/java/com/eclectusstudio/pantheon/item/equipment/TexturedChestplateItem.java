@@ -34,9 +34,9 @@ public class TexturedChestplateItem extends TexturedEquipmentItem {
                 .assetId(toKey(getEquipmentResourceLocation()))
                 .build();
 
+        stack.setItemMeta(meta);
         stack.setData(DataComponentTypes.EQUIPPABLE, equippableComponent);
 
-        stack.setItemMeta(meta);
         return stack;
     }
 }

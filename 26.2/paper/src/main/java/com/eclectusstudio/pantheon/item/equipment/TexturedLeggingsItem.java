@@ -29,13 +29,13 @@ public class TexturedLeggingsItem extends TexturedEquipmentItem {
             return stack;
         }
 
-        Equippable equippableComponent = Equippable.equippable(EquipmentSlot.CHEST)
+        Equippable equippableComponent = Equippable.equippable(EquipmentSlot.LEGS)
                 .assetId(toKey(getEquipmentResourceLocation()))
                 .build();
 
+        stack.setItemMeta(meta);
         stack.setData(DataComponentTypes.EQUIPPABLE, equippableComponent);
 
-        stack.setItemMeta(meta);
         return stack;
     }
 }
