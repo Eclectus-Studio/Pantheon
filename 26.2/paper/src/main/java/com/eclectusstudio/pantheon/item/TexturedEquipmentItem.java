@@ -1,10 +1,12 @@
 package com.eclectusstudio.pantheon.item;
 
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.eclectusstudio.pantheon.Pantheon;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -150,6 +152,8 @@ public class TexturedEquipmentItem extends Item {
     public void setRepairIngredient(ItemStack repairIngredient) {
         this.repairIngredient = repairIngredient;
     }
+
+    public void onEquip(LivingEntity entity){}
 
     @Override
     public ItemStack createStack() {

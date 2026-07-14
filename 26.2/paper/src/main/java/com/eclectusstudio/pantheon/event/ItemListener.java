@@ -1,14 +1,21 @@
 package com.eclectusstudio.pantheon.event;
 
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import com.eclectusstudio.pantheon.item.Item;
+import com.eclectusstudio.pantheon.item.TexturedEquipmentItem;
 import com.eclectusstudio.pantheon.registry.ItemRegistry;
+import io.papermc.paper.event.entity.EntityEquipmentChangedEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Map;
 
 public class ItemListener implements Listener {
 
@@ -73,5 +80,29 @@ public class ItemListener implements Listener {
             return;
 
         customItem.onInventoryClick(event);
+    }
+
+    @EventHandler
+    public void onEquip(EntityEquipmentChangedEvent e) {
+        for (Map.Entry<EquipmentSlot, EntityEquipmentChangedEvent.EquipmentChange> entry : e.getEquipmentChanges().entrySet()) {
+            EquipmentSlot slot = entry.getKey();
+            EntityEquipmentChangedEvent.EquipmentChange change = entry.getValue();
+
+            ItemStack stack = change.newItem();
+
+            if (stack == null || stack.getType().isAir()) {
+                continue;
+            }
+
+            Item customItem = ItemRegistry.getItem(stack);
+            if (customItem == null) {
+                continue;
+            }
+
+            if (customItem instanceof TexturedEquipmentItem texturedItem) {
+
+                texturedItem.onEquip(e.getEntity());
+            }
+        }
     }
 }
