@@ -1,4 +1,4 @@
-package com.eclectusstudio.pantheon.common.data.damagetype;
+package com.eclectusstudio.pantheon.common.data.damage_type;
 
 public enum DeathMessageType {
     DEFAULT,

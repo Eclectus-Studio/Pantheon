@@ -6,6 +6,7 @@ import com.eclectusstudio.pantheon.common.resource.equipment.Equipments;
 import com.eclectusstudio.pantheon.common.resource.items.ItemModels;
 import com.eclectusstudio.pantheon.common.resource.items.ResourcePackItems;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
+import com.eclectusstudio.pantheon.common.resource.sounds.SoundsFile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,8 @@ public final class ResourcePack {
     private final Equipments equipments;
 
     private final Map<ResourceLocation, Font> fonts;
+
+    private SoundsFile soundsFile;
 
 
     public ResourcePack(PackMCMeta meta) {
@@ -88,6 +91,9 @@ public final class ResourcePack {
         return this;
     }
 
+    public void setSoundsFile(SoundsFile soundsFile) {
+        this.soundsFile = soundsFile;
+    }
 
     /*
      * Getters
@@ -111,5 +117,9 @@ public final class ResourcePack {
 
     public Map<ResourceLocation, Font> getFonts() {
         return fonts;
+    }
+
+    public SoundsFile getSoundsFile() {
+        return soundsFile;
     }
 }

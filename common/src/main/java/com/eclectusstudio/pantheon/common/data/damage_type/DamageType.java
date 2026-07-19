@@ -1,16 +1,17 @@
-package com.eclectusstudio.pantheon.common.data.damagetype;
+package com.eclectusstudio.pantheon.common.data.damage_type;
 
 import com.eclectusstudio.pantheon.common.ResourceLocation;
+import com.eclectusstudio.pantheon.common.resource.language.TranslationKey;
 
 public class DamageType {
     private ResourceLocation location;
-    private String deathMessage;
+    private TranslationKey deathMessage;
     private float exhaustion;
     private DamageScaling scaling;
     private DamageEffect effect;
     private DeathMessageType deathMessageType;
 
-    public DamageType(ResourceLocation location, String deathMessage, float exhaustion, DamageScaling scaling, DamageEffect effect, DeathMessageType deathMessageType){
+    public DamageType(ResourceLocation location, TranslationKey deathMessage, float exhaustion, DamageScaling scaling, DamageEffect effect, DeathMessageType deathMessageType){
         this.location = location;
         this.deathMessage = deathMessage;
         this.exhaustion = exhaustion;
@@ -23,7 +24,7 @@ public class DamageType {
         return location;
     }
 
-    public String getDeathMessage() {
+    public TranslationKey getDeathMessage() {
         return deathMessage;
     }
 

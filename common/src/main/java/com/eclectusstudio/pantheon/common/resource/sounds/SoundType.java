@@ -1,6 +1,7 @@
 package com.eclectusstudio.pantheon.common.resource.sounds;
 
 public enum SoundType {
+
     FILE("file"),
     EVENT("event");
 

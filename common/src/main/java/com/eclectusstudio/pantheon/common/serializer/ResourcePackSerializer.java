@@ -9,6 +9,7 @@ import com.eclectusstudio.pantheon.common.serializer.equipment.EquipmentSerializ
 import com.eclectusstudio.pantheon.common.serializer.font.FontSerializer;
 import com.eclectusstudio.pantheon.common.serializer.items.ItemsSerializer;
 import com.eclectusstudio.pantheon.common.serializer.models.ModelSerializer;
+import com.eclectusstudio.pantheon.common.serializer.sounds.SoundsSerializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -61,6 +62,11 @@ public class ResourcePackSerializer {
                     entry.getValue()
             );
         }
+
+        SoundsSerializer.serialize(
+                root.toPath().resolve("assets"),
+                pack.getSoundsFile()
+        );
 
         // LanguageSerializer.serialize(...)
     }
