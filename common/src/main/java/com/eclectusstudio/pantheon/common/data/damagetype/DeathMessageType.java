@@ -1,0 +1,7 @@
+package com.eclectusstudio.pantheon.common.data.damagetype;
+
+public enum DeathMessageType {
+    DEFAULT,
+    FALL_VARIANTS,
+    INTENTIONAL_GAME_DESIGN;
+}
