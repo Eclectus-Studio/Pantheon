@@ -8,7 +8,7 @@ public class JukeboxSong {
 
     private final String soundID;
 
-    private final String description;
+    private final String description; //Todo Text Component
 
     private final float length_in_seconds;
 
