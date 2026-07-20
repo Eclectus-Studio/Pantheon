@@ -1,16 +1,13 @@
 package com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition;
 
-import com.eclectusstudio.pantheon.common.ResourceLocation;
-
 import java.util.List;
 
 public class BiomeCondition implements Condition {
 
     private final String type = "biome";
+    private final List<ConditionTarget> biomes;
 
-    private List<ResourceLocation> biomes;
-
-    public BiomeCondition(List<ResourceLocation> biomes) {
+    public BiomeCondition(List<ConditionTarget> biomes) {
         this.biomes = biomes;
     }
 
@@ -19,7 +16,7 @@ public class BiomeCondition implements Condition {
         return type;
     }
 
-    public List<ResourceLocation> getBiomes() {
+    public List<ConditionTarget> getBiomes() {
         return biomes;
     }
 }

@@ -3,35 +3,27 @@ package com.eclectusstudio.pantheon.commands;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.item.Item;
 import com.eclectusstudio.pantheon.registry.ItemRegistry;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import io.papermc.paper.command.brigadier.BasicCommand;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class GetCustomItemCommand implements CommandExecutor, TabCompleter {
+public class GetCustomItemCommand implements BasicCommand {
 
     @Override
-    public boolean onCommand(
-            @NotNull CommandSender sender,
-            @NotNull Command command,
-            @NotNull String label,
-            @NotNull String[] args
-    ) {
+    public void execute(CommandSourceStack source, String[] args) {
 
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage("Players only.");
-            return true;
+        if (!(source.getSender() instanceof Player player)) {
+            source.getSender().sendMessage("Players only.");
+            return;
         }
 
         if (args.length != 1) {
             player.sendMessage("/getitem <id>");
-            return true;
+            return;
         }
 
         Item item = ItemRegistry.get(
@@ -40,44 +32,32 @@ public class GetCustomItemCommand implements CommandExecutor, TabCompleter {
 
         if (item == null) {
             player.sendMessage("Unknown item.");
-            return true;
+            return;
         }
 
-        player.getInventory().addItem(
-                item.createStack()
+        player.getInventory().addItem(item.createStack());
+
+        player.sendMessage(
+                Component.text("Given " + item.getId())
         );
-
-        player.sendMessage("Given " + item.getId());
-
-        return true;
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(
-            @NotNull CommandSender sender,
-            @NotNull Command command,
-            @NotNull String alias,
-            @NotNull String[] args
+    public Collection<String> suggest(
+            CommandSourceStack source,
+            String[] args
     ) {
 
-        if (args.length == 1) {
-
-            String current = args[0].toLowerCase();
-
-            List<String> suggestions = new ArrayList<>();
-
-            for (Item item : ItemRegistry.getItems()) {
-
-                String id = item.getId().toString();
-
-                if (id.toLowerCase().startsWith(current)) {
-                    suggestions.add(id);
-                }
-            }
-
-            return suggestions;
+        if (args.length != 1) {
+            return List.of();
         }
 
-        return List.of();
+        String current = args[0].toLowerCase();
+
+        return ItemRegistry.getItems()
+                .stream()
+                .map(item -> item.getId().toString())
+                .filter(id -> id.toLowerCase().startsWith(current))
+                .toList();
     }
 }

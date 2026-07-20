@@ -9,9 +9,3 @@ api-version: '26.2'
 load: POSTWORLD
 
 authors: [Eclectusstudio]
-
-commands:
-  getitem:
-    description: Gets a custom item.
-    permission: pantheon.command.getitem
-    usage: /getitem

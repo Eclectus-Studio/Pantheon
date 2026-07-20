@@ -1,21 +1,13 @@
 package com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition;
 
-import com.eclectusstudio.pantheon.common.ResourceLocation;
-
 import java.util.List;
 
 public class StructureCondition implements Condition {
 
     private final String type = "structure";
+    private final List<ConditionTarget> structures;
 
-    /**
-     * Structure IDs or tags.
-     */
-    private List<ResourceLocation> structures;
-
-    public StructureCondition() {}
-
-    public StructureCondition(List<ResourceLocation> structures) {
+    public StructureCondition(List<ConditionTarget> structures) {
         this.structures = structures;
     }
 
@@ -24,7 +16,7 @@ public class StructureCondition implements Condition {
         return type;
     }
 
-    public List<ResourceLocation> getStructures() {
+    public List<ConditionTarget> getStructures() {
         return structures;
     }
 }
