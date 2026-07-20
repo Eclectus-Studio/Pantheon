@@ -5,6 +5,7 @@ public class Config {
     public static boolean PackHostingEnabled;
     public static int PackHostingPort;
     public static String PackHostingAddress;
+    public static boolean PackGenerationOnProxy;
 
     public static void init() {
         PackHostingEnabled =
@@ -23,6 +24,12 @@ public class Config {
                 Pantheon.pantheon.getConfig().getString(
                         "pack-hosting-address",
                         "localhost"
+                );
+
+        PackGenerationOnProxy =
+                Pantheon.pantheon.getConfig().getBoolean(
+                        "pack-generation-on-proxy",
+                        false
                 );
     }
 }

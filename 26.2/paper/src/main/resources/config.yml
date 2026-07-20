@@ -4,3 +4,5 @@ pack-hosting-port: 8080
 # Public hostname/IP players should connect to.
 # Do NOT include protocol or port.
 pack-hosting-address: localhost
+#If you have pantheon running on the proxy and you use it to build the pack, this will disable the pack pipeline on this server
+pack-generation-on-proxy: false

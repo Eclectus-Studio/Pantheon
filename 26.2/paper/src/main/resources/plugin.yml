@@ -3,6 +3,8 @@ description: $description
 version: '${version}'
 
 main: com.eclectusstudio.pantheon.Pantheon
+bootstrapper: com.eclectusstudio.pantheon.bootstrap.PantheonBootstrap
+
 api-version: '26.2'
 load: POSTWORLD
 

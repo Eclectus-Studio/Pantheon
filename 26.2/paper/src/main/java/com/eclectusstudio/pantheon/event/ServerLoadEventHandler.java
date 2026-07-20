@@ -29,90 +29,98 @@ public class ServerLoadEventHandler implements Listener {
 
     @EventHandler
     public void onStart(ServerLoadEvent e) {
+        buildPack();
+    }
 
-        Bukkit.getPluginManager().callEvent(
-                new BuildResourcePackEvent()
-        );
+    private void buildPack(){
+        if(!Config.PackGenerationOnProxy){
+            long startTime = System.nanoTime();
 
-        File packFolder = new File(
-                Pantheon.pantheon.getDataFolder(),
-                "generated_pack"
-        );
+            Bukkit.getPluginManager().callEvent(
+                    new BuildResourcePackEvent()
+            );
 
-        FileUtils.deleteRecursively(packFolder);
-        packFolder.mkdirs();
+            File packFolder = new File(
+                    Pantheon.pantheon.getDataFolder(),
+                    "generated_pack"
+            );
 
-        File assetsFolder = new File(
-                packFolder,
-                "assets"
-        );
+            FileUtils.deleteRecursively(packFolder);
+            packFolder.mkdirs();
 
-        assetsFolder.mkdirs();
+            File assetsFolder = new File(
+                    packFolder,
+                    "assets"
+            );
 
-        Bukkit.getPluginManager().callEvent(
-                new CopyAssetsEvent(assetsFolder)
-        );
+            assetsFolder.mkdirs();
 
-        Bukkit.getPluginManager().callEvent(
-                new SubmitItemsEvent()
-        );
+            Bukkit.getPluginManager().callEvent(
+                    new CopyAssetsEvent(assetsFolder)
+            );
 
-        ItemRegistry.lock();
+            Bukkit.getPluginManager().callEvent(
+                    new SubmitItemsEvent()
+            );
 
-        for (ResourcePack pack : ResourcePacks.getPacks()) {
+            ItemRegistry.lock();
+
+            for (ResourcePack pack : ResourcePacks.getPacks()) {
+                try {
+                    ResourcePackSerializer.serialize(
+                            packFolder,
+                            pack
+                    );
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+            File packFile = new File(
+                    Pantheon.pantheon.getDataFolder(),
+                    "resourcepack.zip"
+            );
 
             try {
-                ResourcePackSerializer.serialize(
+                ResourcePackZipper.zipContents(
                         packFolder,
-                        pack
+                        packFile
                 );
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-        }
 
-        File packFile = new File(
-                Pantheon.pantheon.getDataFolder(),
-                "resourcepack.zip"
-        );
+            if (Config.PackHostingEnabled) {
+                try {
+                    startPackHosting(packFile);
 
-        try {
-            ResourcePackZipper.zipContents(
-                    packFolder,
-                    packFile
-            );
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+                    byte[] hash = sha1(packFile);
 
-        if (!Config.PackHostingEnabled) {
-            return;
-        }
+                    String url =
+                            "https://"
+                                    + Config.PackHostingAddress
+                                    + ":"
+                                    + Config.PackHostingPort
+                                    + "/resourcepack.zip";
 
-        try {
+                    HostedPack.set(
+                            url,
+                            hash
+                    );
 
-            startPackHosting(packFile);
+                    Pantheon.pantheon.getLogger().info(
+                            "Resource pack available at: " + url
+                    );
 
-            byte[] hash = sha1(packFile);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
 
-            String url =
-                    "https://"
-                            + Config.PackHostingAddress
-                            + ":"
-                            + Config.PackHostingPort
-                            + "/resourcepack.zip";
-
-            HostedPack.set(
-                    url,
-                    hash
-            );
-
+            double elapsedMs = (System.nanoTime() - startTime) / 1_000_000.0;
             Pantheon.pantheon.getLogger().info(
-                    "Resource pack available at: " + url
+                    String.format("Resource pack generated in %.2f ms", elapsedMs)
             );
-
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
         }
     }
 
