@@ -6,14 +6,16 @@ import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_conditio
 import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.MoonBrightnessCondition;
 import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.SpawnCondition;
 import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.StructureCondition;
+import io.papermc.paper.registry.data.util.Conversions;
 import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.variant.BiomeCheck;
 import net.minecraft.world.entity.variant.MoonBrightnessCheck;
@@ -31,7 +33,7 @@ final class SpawnConditionTranslator {
     private SpawnConditionTranslator() {}
 
     static List<PriorityProvider.Selector<SpawnContext, net.minecraft.world.entity.variant.SpawnCondition>> toSelectors(
-            SpawnCondition pantheonEntry
+            SpawnCondition pantheonEntry, Conversions conversions
     ) {
         Condition condition = pantheonEntry.getCondition();
 
@@ -39,27 +41,25 @@ final class SpawnConditionTranslator {
             return PriorityProvider.alwaysTrue(pantheonEntry.getPriority());
         }
 
-        net.minecraft.world.entity.variant.SpawnCondition nmsCondition = toNmsCondition(condition);
+        net.minecraft.world.entity.variant.SpawnCondition nmsCondition = toNmsCondition(condition, conversions);
         return PriorityProvider.single(nmsCondition, pantheonEntry.getPriority());
     }
 
-    private static net.minecraft.world.entity.variant.SpawnCondition toNmsCondition(Condition condition) {
+    private static net.minecraft.world.entity.variant.SpawnCondition toNmsCondition(Condition condition, Conversions conversions) {
         return switch (condition.getType()) {
-            case "biome" -> toBiomeCheck((BiomeCondition) condition);
-            case "structure" -> toStructureCheck((StructureCondition) condition);
+            case "biome" -> toBiomeCheck((BiomeCondition) condition, conversions);
+            case "structure" -> toStructureCheck((StructureCondition) condition, conversions);
             case "moon_brightness" -> toMoonBrightnessCheck((MoonBrightnessCondition) condition);
             default -> throw new IllegalArgumentException("Unknown spawn condition type: " + condition.getType());
         };
     }
 
-    private static BiomeCheck toBiomeCheck(BiomeCondition condition) {
-        Registry<Biome> biomeRegistry = MinecraftServer.getServer().registryAccess().lookupOrThrow(Registries.BIOME);
-        return new BiomeCheck(toHolderSet(condition.getBiomes(), biomeRegistry, Registries.BIOME));
+    private static BiomeCheck toBiomeCheck(BiomeCondition condition, Conversions conversions) {
+        return new BiomeCheck(toHolderSet(condition.getBiomes(), Registries.BIOME, conversions));
     }
 
-    private static StructureCheck toStructureCheck(StructureCondition condition) {
-        Registry<Structure> structureRegistry = MinecraftServer.getServer().registryAccess().lookupOrThrow(Registries.STRUCTURE);
-        return new StructureCheck(toHolderSet(condition.getStructures(), structureRegistry, Registries.STRUCTURE));
+    private static StructureCheck toStructureCheck(StructureCondition condition, Conversions conversions) {
+        return new StructureCheck(toHolderSet(condition.getStructures(), Registries.STRUCTURE, conversions));
     }
 
     private static MoonBrightnessCheck toMoonBrightnessCheck(MoonBrightnessCondition condition) {
@@ -67,32 +67,24 @@ final class SpawnConditionTranslator {
     }
 
     private static <T> HolderSet<T> toHolderSet(
-            List<ConditionTarget> targets,
-            Registry<T> registry,
-            ResourceKey<Registry<T>> registryKey
+            List<ConditionTarget> targets, ResourceKey<Registry<T>> registryKey, Conversions conversions
     ) {
-        // Assumes all targets are the same kind (all tags, or all direct IDs) — vanilla's own
-        // `biomes`/`structures` field also only supports one or the other per condition, not a mix.
         if (targets.isEmpty()) {
             throw new IllegalArgumentException("Condition target list is empty");
         }
 
-        if (targets.get(0).isTag()) {
-            ConditionTarget tagTarget = targets.get(0);
-            TagKey<T> tagKey = TagKey.create(registryKey, toMcIdentifier(tagTarget.location()));
+        RegistryOps.RegistryInfoLookup lookup = conversions.lookup();
+        RegistryOps.RegistryInfo<T> info = lookup.<T>lookup(registryKey)
+                .orElseThrow(() -> new IllegalStateException("No registry info available for " + registryKey));
+        HolderGetter<T> getter = info.getter();
 
-            return registry.get(tagKey) // Optional<HolderSet.Named<T>>
-                    .<HolderSet<T>>map(named -> named)
-                    .orElseThrow(() -> new IllegalArgumentException("Unknown tag: " + tagKey));
+        if (targets.get(0).isTag()) {
+            TagKey<T> tagKey = TagKey.create(registryKey, toMcIdentifier(targets.get(0).location()));
+            return getter.getOrThrow(tagKey);
         }
 
         List<Holder<T>> holders = targets.stream()
-                .map(t -> {
-                    ResourceKey<T> key = ResourceKey.create(registryKey, toMcIdentifier(t.location()));
-                    return registry.get(key) // Optional<Holder.Reference<T>>
-                            .<Holder<T>>map(h -> h)
-                            .orElseThrow(() -> new IllegalArgumentException("Unknown entry: " + key));
-                })
+                .map(t -> (Holder<T>) getter.getOrThrow(ResourceKey.create(registryKey, toMcIdentifier(t.location()))))
                 .collect(Collectors.toList());
 
         return HolderSet.direct(holders);

@@ -3,6 +3,7 @@ package com.eclectusstudio.pantheon.bootstrap.adapters;
 import com.eclectusstudio.pantheon.common.data.cat_variant.CatVariant;
 import io.papermc.paper.registry.data.CatTypeRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
+import io.papermc.paper.registry.data.util.Conversions;
 import net.minecraft.world.entity.variant.PriorityProvider;
 import net.minecraft.world.entity.variant.SpawnContext;
 import net.minecraft.world.entity.variant.SpawnPrioritySelectors;
@@ -17,9 +18,6 @@ public final class CatVariantAdapter {
 
     private CatVariantAdapter() {}
 
-    // Reflection target confirmed from PaperCatTypeRegistryEntry's decompiled source:
-    // `protected SpawnPrioritySelectors spawnConditions` on the concrete builder impl,
-    // never exposed on the public CatTypeRegistryEntry.Builder interface.
     private static final Field SPAWN_CONDITIONS_FIELD;
 
     static {
@@ -32,18 +30,18 @@ public final class CatVariantAdapter {
         }
     }
 
-    public static void apply(CatVariant variant, CatTypeRegistryEntry.Builder builder) {
+    public static void apply(CatVariant variant, CatTypeRegistryEntry.Builder builder, Conversions conversions) {
         builder
                 .clientTextureAsset(ClientTextureAsset.clientTextureAsset(toKey(variant.getAdultTexture())))
                 .babyClientTextureAsset(ClientTextureAsset.clientTextureAsset(toKey(variant.getBabyTexture())));
 
-        applySpawnConditions(variant, builder);
+        applySpawnConditions(variant, builder, conversions);
     }
 
-    private static void applySpawnConditions(CatVariant variant, CatTypeRegistryEntry.Builder builder) {
+    private static void applySpawnConditions(CatVariant variant, CatTypeRegistryEntry.Builder builder, Conversions conversions) {
         List<PriorityProvider.Selector<SpawnContext, net.minecraft.world.entity.variant.SpawnCondition>> selectors =
                 variant.getSpawnConditions().stream()
-                        .flatMap(entry -> SpawnConditionTranslator.toSelectors(entry).stream())
+                        .flatMap(entry -> SpawnConditionTranslator.toSelectors(entry, conversions).stream())
                         .collect(Collectors.toList());
 
         SpawnPrioritySelectors nmsSelectors = new SpawnPrioritySelectors(selectors);
