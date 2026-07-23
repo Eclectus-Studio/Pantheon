@@ -29,6 +29,10 @@ tasks {
         dependsOn(shadowJar)
     }
 
+    shadowJar {
+        archiveFileName = "pantheon-velocity-v${project.version}-all.${archiveExtension.get()}"
+    }
+
   runVelocity {
     // Configure the Velocity version for our task.
     // This is the only required configuration besides applying the plugin.

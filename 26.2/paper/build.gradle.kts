@@ -33,4 +33,8 @@ tasks {
             expand(props)
         }
     }
+
+    shadowJar {
+        archiveFileName = "pantheon-paper-v${project.version}-all.${archiveExtension.get()}"
+    }
 }
