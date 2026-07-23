@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.common.pack;
 
 public record FormatInterval(
-        int minInclusive,
-        int maxInclusive
+        float minInclusive,
+        float maxInclusive
 ) implements FormatRange {}

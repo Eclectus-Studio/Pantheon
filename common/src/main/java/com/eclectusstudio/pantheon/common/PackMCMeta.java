@@ -1,6 +1,7 @@
 package com.eclectusstudio.pantheon.common;
 
 import com.eclectusstudio.pantheon.common.pack.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -8,7 +9,7 @@ public final class PackMCMeta {
 
     private String description;
 
-    private Integer packFormat;
+    private Float packFormat;
     private FormatRange supportedFormats;
 
     private final List<String> features = new ArrayList<>();
@@ -31,12 +32,12 @@ public final class PackMCMeta {
             return this;
         }
 
-        public Builder packFormat(int format) {
+        public Builder packFormat(float format) {
             meta.packFormat = format;
             return this;
         }
 
-        public Builder supports(int minFormat, int maxFormat) {
+        public Builder supports(float minFormat, float maxFormat) {
             meta.supportedFormats = new FormatInterval(
                     minFormat,
                     maxFormat
@@ -104,7 +105,7 @@ public final class PackMCMeta {
         return description;
     }
 
-    public Integer getPackFormat() {
+    public Float getPackFormat() {
         return packFormat;
     }
 
