@@ -3,6 +3,8 @@ package com.eclectusstudio.pantheon.common.data.chicken_variant;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.SpawnCondition;
 
+import java.util.List;
+
 public class ChickenVariant {
     private final ResourceLocation location;
 
@@ -11,33 +13,19 @@ public class ChickenVariant {
 
     private final ChickenModelVariant modelVariant;
 
-    private final SpawnCondition condition;
+    private final List<SpawnCondition> spawnConditions;
 
-    public ChickenVariant(ResourceLocation location, ResourceLocation adultTexture, ResourceLocation babyTexture, ChickenModelVariant modelVariant, SpawnCondition condition) {
+    public ChickenVariant(ResourceLocation location, ResourceLocation adultTexture, ResourceLocation babyTexture, ChickenModelVariant modelVariant, List<SpawnCondition> spawnConditions) {
         this.location = location;
         this.adultTexture = adultTexture;
         this.babyTexture = babyTexture;
         this.modelVariant = modelVariant;
-        this.condition = condition;
+        this.spawnConditions = spawnConditions;
     }
 
-    public ResourceLocation getLocation() {
-        return location;
-    }
-
-    public ResourceLocation getAdultTexture() {
-        return adultTexture;
-    }
-
-    public ResourceLocation getBabyTexture() {
-        return babyTexture;
-    }
-
-    public ChickenModelVariant getModelVariant() {
-        return modelVariant;
-    }
-
-    public SpawnCondition getCondition() {
-        return condition;
-    }
+    public ResourceLocation getLocation() { return location; }
+    public ResourceLocation getAdultTexture() { return adultTexture; }
+    public ResourceLocation getBabyTexture() { return babyTexture; }
+    public ChickenModelVariant getModelVariant() { return modelVariant; }
+    public List<SpawnCondition> getSpawnConditions() { return spawnConditions; }
 }
