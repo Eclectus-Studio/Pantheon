@@ -2,10 +2,19 @@ package com.eclectusstudio.pantheon.item.tools;
 
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.item.DurableTexturedItem;
+import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;
 
 public class TexturedPickaxeItem extends DurableTexturedItem {
-    protected TexturedPickaxeItem(ResourceLocation id, ItemStack itemStack) {
-        super(id, itemStack);
+    private final Tag<Material> incorrectForToolMaterial;
+
+    protected TexturedPickaxeItem(ResourceLocation id, ItemStack itemStack, int maxDurability, Tag<Material> incorrectForToolMaterial) {
+        super(id, itemStack, maxDurability);
+        this.incorrectForToolMaterial = incorrectForToolMaterial;
+    }
+
+    public Tag<Material> getIncorrectForToolMaterial() {
+        return incorrectForToolMaterial;
     }
 }

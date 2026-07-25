@@ -4,7 +4,7 @@ import com.eclectusstudio.pantheon.common.ResourceLocation;
 import org.bukkit.inventory.ItemStack;
 
 public class TexturedWeaponItem extends DurableTexturedItem{
-    protected TexturedWeaponItem(ResourceLocation id, ItemStack itemStack) {
-        super(id, itemStack);
+    protected TexturedWeaponItem(ResourceLocation id, ItemStack itemStack, int maxDurability) {
+        super(id, itemStack, maxDurability);
     }
 }
