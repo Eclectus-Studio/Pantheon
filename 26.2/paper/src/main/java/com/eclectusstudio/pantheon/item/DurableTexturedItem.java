@@ -6,10 +6,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class DurableTexturedItem extends TexturedItem {
     private final int maxDurability;
+    private final ItemStack repairMaterial;
 
-    protected DurableTexturedItem(ResourceLocation id, ItemStack itemStack, int maxDurability) {
+    protected DurableTexturedItem(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial) {
         super(id, itemStack);
         this.maxDurability = maxDurability;
+        this.repairMaterial = repairMaterial;
     }
 
     /**
@@ -80,6 +82,9 @@ public class DurableTexturedItem extends TexturedItem {
         item.setData(DataComponentTypes.MAX_DAMAGE, maxDurability);
         item.setData(DataComponentTypes.DAMAGE, 0);
 
+        if(repairMaterial != null){
+            item.isRepairableBy(repairMaterial);
+        }
         return item;
     }
 }

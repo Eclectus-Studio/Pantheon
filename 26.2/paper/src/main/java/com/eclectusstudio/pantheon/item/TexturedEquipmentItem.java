@@ -157,7 +157,7 @@ public class TexturedEquipmentItem extends Item {
 
     @Override
     public ItemStack createStack() {
-        ItemStack stack = getItemStack().clone();
+        ItemStack stack = super.createStack().clone();
         ItemMeta meta = stack.getItemMeta();
 
         if (meta == null) {
@@ -213,12 +213,6 @@ public class TexturedEquipmentItem extends Item {
 
             meta.setEquippable(equippable);
         }
-
-        meta.getPersistentDataContainer().set(
-                Pantheon.customItemKey,
-                PersistentDataType.STRING,
-                getId().toString()
-        );
 
         stack.setItemMeta(meta);
         return stack;

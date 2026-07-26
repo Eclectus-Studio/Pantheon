@@ -15,17 +15,11 @@ public abstract class TexturedItem extends Item{
 
     @Override
     public ItemStack createStack(){
-        ItemStack stack = this.getItemStack().clone();
+        ItemStack stack = super.createStack().clone();
 
         ItemMeta meta = stack.getItemMeta();
 
         meta.setItemModel(toKey(getId()));
-
-        meta.getPersistentDataContainer().set(
-                Pantheon.customItemKey,
-                PersistentDataType.STRING,
-                this.getId().toString()
-        );
 
         stack.setItemMeta(meta);
 
