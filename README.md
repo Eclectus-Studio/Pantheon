@@ -40,6 +40,6 @@ dependencies {
 Ex:
 ```gradle
 dependencies {
-    compileOnly("com.github.Eclectus-Studio.Pantheon:26.1.2:Alpha-0.1.0:all")
+    compileOnly("com.github.Eclectus-Studio.Pantheon:paper:Alpha-0.2.2")
 }
 ```
