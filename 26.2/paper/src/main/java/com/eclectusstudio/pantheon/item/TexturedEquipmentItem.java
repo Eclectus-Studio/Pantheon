@@ -1,32 +1,37 @@
 package com.eclectusstudio.pantheon.item;
 
-import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
-import com.eclectusstudio.pantheon.Pantheon;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
-import org.bukkit.Sound;
+import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
+
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Equippable;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
+import io.papermc.paper.registry.keys.EnchantmentKeys;
+import io.papermc.paper.registry.set.RegistryKeySet;
+
+import io.papermc.paper.registry.set.RegistrySet;
+import net.kyori.adventure.key.Key;
+
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.inventory.EquipmentSlotGroup;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.EquippableComponent;
-import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Collection;
-
-import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
-
-public class TexturedEquipmentItem extends Item {
+public class TexturedEquipmentItem extends DurableTexturedItem {
 
     private final ResourceLocation equipmentResourceLocation;
 
-    private Sound equipSound;
-    private Sound shearingSound;
+    private final EquipmentSlot slot;
+
+    private Key equipSound;
+    private Key shearingSound;
 
     private ResourceLocation cameraOverlay;
-    private Collection<EntityType> allowedEntities;
+    private RegistryKeySet<EntityType> allowedEntities;
 
     private boolean dispensable = true;
     private boolean swappable = true;
@@ -34,45 +39,49 @@ public class TexturedEquipmentItem extends Item {
     private boolean equipOnInteract = false;
     private boolean canBeSheared = false;
 
-    // New parameters for durability and repairs
-    private Integer maxDurability = null;
-    private ItemStack repairIngredient = null;
-
     public TexturedEquipmentItem(
             ResourceLocation id,
             ItemStack itemStack,
-            Equipment equipment
+            int maxDamage,
+            ItemStack repairIngredient,
+            Equipment equipment,
+            EquipmentSlot slot
     ) {
-        super(id, itemStack);
+        super(id, itemStack, maxDamage, repairIngredient);
         this.equipmentResourceLocation = equipment.getLocation();
+        this.slot = slot;
     }
 
     public TexturedEquipmentItem(
             ResourceLocation id,
             ItemStack itemStack,
-            ResourceLocation equipmentResourceLocation
+            int maxDamage,
+            ItemStack repairIngredient,
+            ResourceLocation equipmentResourceLocation,
+            EquipmentSlot slot
     ) {
-        super(id, itemStack);
+        super(id, itemStack, maxDamage, repairIngredient);
         this.equipmentResourceLocation = equipmentResourceLocation;
+        this.slot = slot;
     }
 
     public ResourceLocation getEquipmentResourceLocation() {
         return equipmentResourceLocation;
     }
 
-    public Sound getEquipSound() {
+    public Key getEquipSound() {
         return equipSound;
     }
 
-    public void setEquipSound(Sound equipSound) {
+    public void setEquipSound(Key equipSound) {
         this.equipSound = equipSound;
     }
 
-    public Sound getShearingSound() {
+    public Key getShearingSound() {
         return shearingSound;
     }
 
-    public void setShearingSound(Sound shearingSound) {
+    public void setShearingSound(Key shearingSound) {
         this.shearingSound = shearingSound;
     }
 
@@ -84,16 +93,19 @@ public class TexturedEquipmentItem extends Item {
         this.cameraOverlay = cameraOverlay;
     }
 
-    public Collection<EntityType> getAllowedEntities() {
+    public RegistryKeySet<EntityType> getAllowedEntities() {
         return allowedEntities;
     }
 
-    public void setAllowedEntities(Collection<EntityType> allowedEntities) {
+    public void setAllowedEntities(RegistryKeySet<EntityType> allowedEntities) {
         this.allowedEntities = allowedEntities;
     }
 
-    public void setAllowedEntities(EntityType entityType) {
-        this.allowedEntities = java.util.List.of(entityType);
+    public void setAllowedEntity(EntityType entityType) {
+        RegistryKeySet<EntityType> customSet = RegistrySet.keySet(
+                RegistryKey.ENTITY_TYPE,
+                TypedKey.create(RegistryKey.ENTITY_TYPE, entityType.getKey())
+        );;
     }
 
     public boolean isDispensable() {
@@ -136,24 +148,11 @@ public class TexturedEquipmentItem extends Item {
         this.canBeSheared = canBeSheared;
     }
 
-    // Getters and Setters for Durability & Repairs
-    public Integer getMaxDurability() {
-        return maxDurability;
-    }
-
-    public void setMaxDurability(Integer maxDurability) {
-        this.maxDurability = maxDurability;
-    }
-
-    public ItemStack getRepairIngredient() {
-        return repairIngredient;
-    }
-
-    public void setRepairIngredient(ItemStack repairIngredient) {
-        this.repairIngredient = repairIngredient;
-    }
-
     public void onEquip(LivingEntity entity){}
+
+    public EquipmentSlot getSlot() {
+        return slot;
+    }
 
     @Override
     public ItemStack createStack() {
@@ -164,57 +163,58 @@ public class TexturedEquipmentItem extends Item {
             return stack;
         }
 
-        meta.setItemModel(toKey(getId()));
-
         // Handle Max Durability Component via Damageable Meta interface
-        if (maxDurability != null) {
-            if (meta instanceof Damageable damageable) {
-                // If it natively supports damage (Sword, Elytra, etc.)
-                damageable.setMaxDamage(maxDurability);
-            } else {
-                // For non-damageable items (e.g., Paper, Gold Nugget, Stick),
-                stack.setData(io.papermc.paper.datacomponent.DataComponentTypes.MAX_DAMAGE, maxDurability);
+        if (meta instanceof Damageable damageable) {
+            // If it natively supports damage (Sword, Elytra, etc.)
+            damageable.setMaxDamage(super.getMaxDurability());
+        } else {
+            // For non-damageable items (e.g., Paper, Gold Nugget, Stick),
+            stack.setData(io.papermc.paper.datacomponent.DataComponentTypes.MAX_DAMAGE, super.getMaxDurability());
 
-                // Refresh meta
-                meta = stack.getItemMeta();
-            }
+            // Refresh meta
+            meta = stack.getItemMeta();
         }
 
         // Anvil Repair Ingredients
-        if (repairIngredient != null) {
-            stack.isRepairableBy(repairIngredient);
+        if (super.getRepairMaterial() != null) {
+            stack.isRepairableBy(super.getRepairMaterial());
         }
 
+        Equippable.Builder builder = Equippable.equippable(slot);
+
         // Handle Equippable Component
-        EquippableComponent equippable = meta.getEquippable();
-        if (equippable != null) {
+        if (builder != null) {
+            builder.assetId(toKey(getEquipmentResourceLocation()));
+
             if (equipSound != null) {
-                equippable.setEquipSound(equipSound);
+                builder.equipSound(equipSound);
             }
 
             if (cameraOverlay != null) {
-                equippable.setCameraOverlay(toKey(cameraOverlay));
+                builder.cameraOverlay(toKey(cameraOverlay));
             }
 
             if (allowedEntities != null) {
-                equippable.setAllowedEntities(allowedEntities);
+                builder.allowedEntities(allowedEntities);
             }
 
-            equippable.setDispensable(dispensable);
-            equippable.setSwappable(swappable);
-            equippable.setDamageOnHurt(damageOnHurt);
-            equippable.setEquipOnInteract(equipOnInteract);
-            equippable.setCanBeSheared(canBeSheared);
-            equippable.setModel(toKey(equipmentResourceLocation));
+            builder.dispensable(dispensable);
+            builder.swappable(swappable);
+            builder.damageOnHurt(damageOnHurt);
+            builder.equipOnInteract(equipOnInteract);
+            builder.canBeSheared(canBeSheared);
 
             if (shearingSound != null) {
-                equippable.setShearingSound(shearingSound);
+                builder.shearSound(shearingSound);
             }
-
-            meta.setEquippable(equippable);
         }
 
         stack.setItemMeta(meta);
+
+        if(builder != null){
+            stack.setData(DataComponentTypes.EQUIPPABLE, builder.build());
+        }
+
         return stack;
     }
 }
