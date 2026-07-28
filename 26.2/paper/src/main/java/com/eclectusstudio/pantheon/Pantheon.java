@@ -29,25 +29,14 @@ public final class Pantheon extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
 
         //Commands
-        GetCustomItemCommand cmd = new GetCustomItemCommand();
-
-        getLifecycleManager().registerEventHandler(
-                LifecycleEvents.COMMANDS,
-                commands -> {
-                    commands.registrar().register(
-                            Commands.literal("getitem")
-                                    .executes(ctx -> {
-                                        new GetCustomItemCommand()
-                                                .execute(
-                                                        ctx.getSource(),
-                                                        new String[0]
-                                                );
-                                        return 1;
-                                    })
-                                    .build()
+        Commands.literal("getitem")
+                .executes(ctx -> {
+                    new GetCustomItemCommand().execute(
+                            ctx.getSource(),
+                            new String[0]
                     );
-                }
-        );
+                    return 1;
+                });
     }
 
     @Override
