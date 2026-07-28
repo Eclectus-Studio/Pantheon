@@ -3,28 +3,22 @@ package com.eclectusstudio.pantheon.common.data.frog_variant;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.SpawnCondition;
 
+import java.util.List;
+
 public class FrogVariant {
     private final ResourceLocation location;
 
     private final ResourceLocation model;
 
-    private final SpawnCondition condition;
+    private final List<SpawnCondition> spawnConditions;
 
-    public FrogVariant(ResourceLocation location, ResourceLocation model, SpawnCondition condition) {
+    public FrogVariant(ResourceLocation location, ResourceLocation model, List<SpawnCondition> spawnConditions) {
         this.location = location;
         this.model = model;
-        this.condition = condition;
+        this.spawnConditions = spawnConditions;
     }
 
-    public ResourceLocation getLocation() {
-        return location;
-    }
-
-    public ResourceLocation getModel() {
-        return model;
-    }
-
-    public SpawnCondition getCondition() {
-        return condition;
-    }
+    public ResourceLocation getLocation() { return location; }
+    public ResourceLocation getModel() { return model; }
+    public List<SpawnCondition> getSpawnConditions() { return spawnConditions; }
 }
