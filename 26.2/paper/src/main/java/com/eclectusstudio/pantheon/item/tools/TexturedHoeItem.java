@@ -5,7 +5,7 @@ import com.eclectusstudio.pantheon.item.DurableTexturedItem;
 import org.bukkit.inventory.ItemStack;
 
 public class TexturedHoeItem extends DurableTexturedItem {
-    protected TexturedHoeItem(ResourceLocation id, ItemStack itemStack) {
-        super(id, itemStack);
+    protected TexturedHoeItem(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial) {
+        super(id, itemStack, maxDurability, repairMaterial);
     }
 }
