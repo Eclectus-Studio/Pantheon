@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.eclectusstudio'
-version = 'Alpha-0.2.2'
+version = 'Alpha-0.2.3'
 
 repositories {
     mavenCentral()
