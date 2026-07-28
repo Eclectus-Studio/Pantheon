@@ -136,44 +136,41 @@ public final class ItemSerializer {
 
             json.addProperty(
                     "property",
-                    select.getProperty()
+                    select.getProperty().id()
             );
 
             JsonArray cases = new JsonArray();
 
-            for (SelectNode.Case c :
-                    select.getCases()) {
+            for (SelectNode.Case c : select.getCases()) {
 
-                JsonObject caseJson =
-                        new JsonObject();
+                JsonObject caseJson = new JsonObject();
 
-                if (c.when instanceof List<?> list) {
+                List<String> when = c.getWhen();
 
-                    JsonArray when =
-                            new JsonArray();
+                if (when.size() == 1) {
 
-                    for (Object value : list) {
-                        when.add(
-                                String.valueOf(value)
-                        );
-                    }
-
-                    caseJson.add(
+                    caseJson.addProperty(
                             "when",
-                            when
+                            when.getFirst() // or when.get(0) if you're not on Java 21+
                     );
 
                 } else {
 
-                    caseJson.addProperty(
+                    JsonArray whenArray = new JsonArray();
+
+                    for (String value : when) {
+                        whenArray.add(value);
+                    }
+
+                    caseJson.add(
                             "when",
-                            String.valueOf(c.when)
+                            whenArray
                     );
                 }
 
                 caseJson.add(
                         "model",
-                        serializeNode(c.model)
+                        serializeNode(c.getModel())
                 );
 
                 cases.add(caseJson);
@@ -182,15 +179,11 @@ public final class ItemSerializer {
             json.add("cases", cases);
 
             if (select.getFallback() != null) {
-
                 json.add(
                         "fallback",
-                        serializeNode(
-                                select.getFallback()
-                        )
+                        serializeNode(select.getFallback())
                 );
             }
-
             return json;
         }
 

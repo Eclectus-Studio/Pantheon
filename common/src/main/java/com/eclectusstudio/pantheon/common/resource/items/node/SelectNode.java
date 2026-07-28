@@ -6,19 +6,29 @@ public class SelectNode implements ItemModelNode {
 
     public static class Case {
 
-        public Object when;
-        public ItemModelNode model;
+        private List<String> when;
+        private ItemModelNode model;
 
-        public Case(
-                Object when,
-                ItemModelNode model
-        ) {
+        public Case(String when, ItemModelNode model) {
+            this.when = List.of(when);
+            this.model = model;
+        }
+
+        public Case(List<String> when, ItemModelNode model) {
             this.when = when;
             this.model = model;
         }
+
+        public List<String> getWhen() {
+            return when;
+        }
+
+        public ItemModelNode getModel() {
+            return model;
+        }
     }
 
-    private String property;
+    private SelectProperty property;
     private List<Case> cases;
     private ItemModelNode fallback;
 
@@ -28,7 +38,7 @@ public class SelectNode implements ItemModelNode {
     }
 
     public SelectNode(
-            String property,
+            SelectProperty property,
             List<Case> cases,
             ItemModelNode fallback
     ) {
@@ -37,7 +47,7 @@ public class SelectNode implements ItemModelNode {
         this.fallback = fallback;
     }
 
-    public String getProperty() {
+    public SelectProperty getProperty() {
         return property;
     }
 
