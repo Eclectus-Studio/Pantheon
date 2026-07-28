@@ -28,6 +28,7 @@ public class ServerLoadEventHandler {
     }
 
     public void buildResourcePack() {
+        long startTime = System.nanoTime();
 
         plugin.getServer().getEventManager()
                 .fire(new BuildResourcePackEvent())
@@ -77,6 +78,11 @@ public class ServerLoadEventHandler {
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
+
+        double elapsedMs = (System.nanoTime() - startTime) / 1_000_000.0;
+        plugin.getLogger().info(
+                String.format("Resource pack generated in %.2f ms", elapsedMs)
+        );
     }
 
     private void startPackHosting(File packFile) throws IOException {
