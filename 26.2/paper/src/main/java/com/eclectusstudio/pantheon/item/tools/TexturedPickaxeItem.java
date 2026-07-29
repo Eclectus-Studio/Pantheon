@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 public class TexturedPickaxeItem extends DurableTexturedItem {
     private final Tag<Material> incorrectForToolMaterial;
 
-    protected TexturedPickaxeItem(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial, Tag<Material> incorrectForToolMaterial) {
+    public TexturedPickaxeItem(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial, Tag<Material> incorrectForToolMaterial) {
         super(id, itemStack, maxDurability, repairMaterial);
         this.incorrectForToolMaterial = incorrectForToolMaterial;
     }
