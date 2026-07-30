@@ -59,6 +59,24 @@ public class PantheonBootstrap implements PluginBootstrap {
                 event.registry().register(key, builder -> PigVariantAdapter.apply(variant, builder, conversions));
             }
         }));
+
+        manager.registerEventHandler(RegistryEvents.WOLF_VARIANT.compose().newHandler(event -> {
+            var conversions = ConversionsExtractor.from(event.registry());
+
+            for (var variant : DatapackSubmission.getDatapack().getWolfVariants()) {
+                TypedKey<Wolf.Variant> key = toTypedKey(variant.getLocation(), RegistryKey.WOLF_VARIANT);
+                event.registry().register(key, builder -> WolfVariantAdapter.apply(variant, builder, conversions));
+            }
+        }));
+
+        manager.registerEventHandler(RegistryEvents.ZOMBIE_NAUTILUS_VARIANT.compose().newHandler(event -> {
+            var conversions = ConversionsExtractor.from(event.registry());
+
+            for (var variant : DatapackSubmission.getDatapack().getZombieNautilusVariants()) {
+                TypedKey<ZombieNautilus.Variant> key = toTypedKey(variant.getLocation(), RegistryKey.ZOMBIE_NAUTILUS_VARIANT);
+                event.registry().register(key, builder -> ZombieNautilusVariantAdapter.apply(variant, builder, conversions));
+            }
+        }));
     }
 
     public static <T> TypedKey<T> toTypedKey(
