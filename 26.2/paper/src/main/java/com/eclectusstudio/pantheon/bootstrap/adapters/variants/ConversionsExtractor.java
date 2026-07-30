@@ -1,4 +1,4 @@
-package com.eclectusstudio.pantheon.bootstrap.adapters;
+package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
 import io.papermc.paper.registry.data.util.Conversions;
 

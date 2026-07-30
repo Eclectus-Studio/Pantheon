@@ -6,4 +6,8 @@ public class TranslationKey {
     public TranslationKey(String key){
         this.key = key;
     }
+
+    public String getKey() {
+        return key;
+    }
 }

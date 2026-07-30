@@ -1,6 +1,7 @@
 package com.eclectusstudio.pantheon.bootstrap;
 
-import com.eclectusstudio.pantheon.bootstrap.adapters.*;
+import com.eclectusstudio.pantheon.bootstrap.adapters.damage.DamageTypeAdapter;
+import com.eclectusstudio.pantheon.bootstrap.adapters.variants.*;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.registry.RegistryKey;
@@ -15,6 +16,7 @@ public class PantheonBootstrap implements PluginBootstrap {
     public void bootstrap(BootstrapContext context) {
         var manager = context.getLifecycleManager();
 
+        // Animal Variants
         manager.registerEventHandler(RegistryEvents.CAT_VARIANT.compose().newHandler(event -> {
             var conversions = ConversionsExtractor.from(event.registry());
 
@@ -75,6 +77,14 @@ public class PantheonBootstrap implements PluginBootstrap {
             for (var variant : DatapackSubmission.getDatapack().getZombieNautilusVariants()) {
                 TypedKey<ZombieNautilus.Variant> key = toTypedKey(variant.getLocation(), RegistryKey.ZOMBIE_NAUTILUS_VARIANT);
                 event.registry().register(key, builder -> ZombieNautilusVariantAdapter.apply(variant, builder, conversions));
+            }
+        }));
+
+        // Damage Types
+        manager.registerEventHandler(RegistryEvents.DAMAGE_TYPE.compose().newHandler(event -> {
+            for (var damageType : DatapackSubmission.getDatapack().getDamageTypes()) {
+                TypedKey<org.bukkit.damage.DamageType> key = toTypedKey(damageType.getLocation(), RegistryKey.DAMAGE_TYPE);
+                event.registry().register(key, builder -> DamageTypeAdapter.apply(damageType, builder));
             }
         }));
     }

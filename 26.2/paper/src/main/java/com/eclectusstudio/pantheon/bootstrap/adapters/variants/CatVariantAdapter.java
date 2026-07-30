@@ -1,7 +1,7 @@
-package com.eclectusstudio.pantheon.bootstrap.adapters;
+package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data.zombie_nautilus_variant.ZombieNautilusVariant;
-import io.papermc.paper.registry.data.ZombieNautilusVariantRegistryEntry;
+import com.eclectusstudio.pantheon.common.data.cat_variant.CatVariant;
+import io.papermc.paper.registry.data.CatTypeRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.data.util.Conversions;
 import net.minecraft.world.entity.variant.PriorityProvider;
@@ -14,15 +14,15 @@ import java.util.stream.Collectors;
 
 import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 
-public final class ZombieNautilusVariantAdapter {
+public final class CatVariantAdapter {
 
-    private ZombieNautilusVariantAdapter() {}
+    private CatVariantAdapter() {}
 
     private static final Field SPAWN_CONDITIONS_FIELD;
 
     static {
         try {
-            Class<?> paperEntryClass = Class.forName("io.papermc.paper.registry.data.PaperZombieNautilusVariantRegistryEntry");
+            Class<?> paperEntryClass = Class.forName("io.papermc.paper.registry.data.PaperCatTypeRegistryEntry");
             SPAWN_CONDITIONS_FIELD = paperEntryClass.getDeclaredField("spawnConditions");
             SPAWN_CONDITIONS_FIELD.setAccessible(true);
         } catch (ReflectiveOperationException e) {
@@ -30,24 +30,15 @@ public final class ZombieNautilusVariantAdapter {
         }
     }
 
-    public static void apply(ZombieNautilusVariant variant, ZombieNautilusVariantRegistryEntry.Builder builder, Conversions conversions) {
+    public static void apply(CatVariant variant, CatTypeRegistryEntry.Builder builder, Conversions conversions) {
         builder
-                .clientTextureAsset(ClientTextureAsset.clientTextureAsset(toKey(variant.getTexture())))
-                .model(toModel(variant.getModelVariant()));
+                .clientTextureAsset(ClientTextureAsset.clientTextureAsset(toKey(variant.getAdultTexture())))
+                .babyClientTextureAsset(ClientTextureAsset.clientTextureAsset(toKey(variant.getBabyTexture())));
 
         applySpawnConditions(variant, builder, conversions);
     }
 
-    private static ZombieNautilusVariantRegistryEntry.Model toModel(
-            com.eclectusstudio.pantheon.common.data.zombie_nautilus_variant.ZombieNautilusModelVariant modelVariant
-    ) {
-        return switch (modelVariant) {
-            case NORMAL -> ZombieNautilusVariantRegistryEntry.Model.NORMAL;
-            case WARM -> ZombieNautilusVariantRegistryEntry.Model.WARM;
-        };
-    }
-
-    private static void applySpawnConditions(ZombieNautilusVariant variant, ZombieNautilusVariantRegistryEntry.Builder builder, Conversions conversions) {
+    private static void applySpawnConditions(CatVariant variant, CatTypeRegistryEntry.Builder builder, Conversions conversions) {
         List<PriorityProvider.Selector<SpawnContext, net.minecraft.world.entity.variant.SpawnCondition>> selectors =
                 variant.getSpawnConditions().stream()
                         .flatMap(entry -> SpawnConditionTranslator.toSelectors(entry, conversions).stream())
@@ -58,7 +49,7 @@ public final class ZombieNautilusVariantAdapter {
         try {
             SPAWN_CONDITIONS_FIELD.set(builder, nmsSelectors);
         } catch (IllegalAccessException e) {
-            throw new IllegalStateException("Failed to set spawn conditions for zombie nautilus variant " + variant.getLocation(), e);
+            throw new IllegalStateException("Failed to set spawn conditions for cat variant " + variant.getLocation(), e);
         }
     }
 }

@@ -1,7 +1,7 @@
-package com.eclectusstudio.pantheon.bootstrap.adapters;
+package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data.pig_variant.PigVariant;
-import io.papermc.paper.registry.data.PigVariantRegistryEntry;
+import com.eclectusstudio.pantheon.common.data.chicken_variant.ChickenVariant;
+import io.papermc.paper.registry.data.ChickenVariantRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.data.util.Conversions;
 import net.minecraft.world.entity.variant.PriorityProvider;
@@ -14,15 +14,15 @@ import java.util.stream.Collectors;
 
 import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 
-public final class PigVariantAdapter {
+public final class ChickenVariantAdapter {
 
-    private PigVariantAdapter() {}
+    private ChickenVariantAdapter() {}
 
     private static final Field SPAWN_CONDITIONS_FIELD;
 
     static {
         try {
-            Class<?> paperEntryClass = Class.forName("io.papermc.paper.registry.data.PaperPigVariantRegistryEntry");
+            Class<?> paperEntryClass = Class.forName("io.papermc.paper.registry.data.PaperChickenVariantRegistryEntry");
             SPAWN_CONDITIONS_FIELD = paperEntryClass.getDeclaredField("spawnConditions");
             SPAWN_CONDITIONS_FIELD.setAccessible(true);
         } catch (ReflectiveOperationException e) {
@@ -30,7 +30,7 @@ public final class PigVariantAdapter {
         }
     }
 
-    public static void apply(PigVariant variant, PigVariantRegistryEntry.Builder builder, Conversions conversions) {
+    public static void apply(ChickenVariant variant, ChickenVariantRegistryEntry.Builder builder, Conversions conversions) {
         builder
                 .clientTextureAsset(ClientTextureAsset.clientTextureAsset(toKey(variant.getAdultTexture())))
                 .babyClientTextureAsset(ClientTextureAsset.clientTextureAsset(toKey(variant.getBabyTexture())))
@@ -39,16 +39,16 @@ public final class PigVariantAdapter {
         applySpawnConditions(variant, builder, conversions);
     }
 
-    private static PigVariantRegistryEntry.Model toModel(
-            com.eclectusstudio.pantheon.common.data.pig_variant.PigModelVariant modelVariant
+    private static ChickenVariantRegistryEntry.Model toModel(
+            com.eclectusstudio.pantheon.common.data.chicken_variant.ChickenModelVariant modelVariant
     ) {
         return switch (modelVariant) {
-            case NORMAL -> PigVariantRegistryEntry.Model.NORMAL;
-            case COLD -> PigVariantRegistryEntry.Model.COLD;
+            case NORMAL -> ChickenVariantRegistryEntry.Model.NORMAL;
+            case COLD -> ChickenVariantRegistryEntry.Model.COLD;
         };
     }
 
-    private static void applySpawnConditions(PigVariant variant, PigVariantRegistryEntry.Builder builder, Conversions conversions) {
+    private static void applySpawnConditions(ChickenVariant variant, ChickenVariantRegistryEntry.Builder builder, Conversions conversions) {
         List<PriorityProvider.Selector<SpawnContext, net.minecraft.world.entity.variant.SpawnCondition>> selectors =
                 variant.getSpawnConditions().stream()
                         .flatMap(entry -> SpawnConditionTranslator.toSelectors(entry, conversions).stream())
@@ -59,7 +59,7 @@ public final class PigVariantAdapter {
         try {
             SPAWN_CONDITIONS_FIELD.set(builder, nmsSelectors);
         } catch (IllegalAccessException e) {
-            throw new IllegalStateException("Failed to set spawn conditions for pig variant " + variant.getLocation(), e);
+            throw new IllegalStateException("Failed to set spawn conditions for chicken variant " + variant.getLocation(), e);
         }
     }
 }

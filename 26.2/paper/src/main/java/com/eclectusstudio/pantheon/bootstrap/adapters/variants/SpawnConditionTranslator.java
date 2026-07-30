@@ -1,4 +1,4 @@
-package com.eclectusstudio.pantheon.bootstrap.adapters;
+package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
 import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.BiomeCondition;
 import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.Condition;
@@ -22,8 +22,6 @@ import net.minecraft.world.entity.variant.MoonBrightnessCheck;
 import net.minecraft.world.entity.variant.PriorityProvider;
 import net.minecraft.world.entity.variant.SpawnContext;
 import net.minecraft.world.entity.variant.StructureCheck;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.List;
 import java.util.stream.Collectors;

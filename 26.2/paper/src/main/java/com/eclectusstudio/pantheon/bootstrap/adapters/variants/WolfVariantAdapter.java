@@ -1,4 +1,4 @@
-package com.eclectusstudio.pantheon.bootstrap.adapters;
+package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
 import com.eclectusstudio.pantheon.common.data.wolf_variant.WolfVariant;
 import io.papermc.paper.registry.data.WolfVariantRegistryEntry;
