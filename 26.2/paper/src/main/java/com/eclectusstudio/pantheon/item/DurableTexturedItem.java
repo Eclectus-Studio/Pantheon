@@ -28,7 +28,7 @@ public class DurableTexturedItem extends TexturedItem {
         return repairMaterial;
     }
 
-    public static boolean damageItem(Player player, ItemStack stack, int amount) {
+    public boolean damageItem(Player player, ItemStack stack, int amount) {
         if (!stack.hasData(DataComponentTypes.MAX_DAMAGE)) {
             return false;
         }

@@ -7,9 +7,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.ToolComponent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TexturedMiningToolItem extends DurableTexturedItem {
     private final Tag<Material> incorrectForToolMaterial;
     private final Tag<Material> minableByTool;
+
+    private final List<ToolComponent.ToolRule> customRules = new ArrayList<>();
 
     private final float miningSpeed;
 
@@ -18,6 +23,10 @@ public class TexturedMiningToolItem extends DurableTexturedItem {
         this.incorrectForToolMaterial = incorrectForToolMaterial;
         this.minableByTool = minableByTool;
         this.miningSpeed = miningSpeed;
+    }
+
+    public void addCustomToolRule(ToolComponent.ToolRule rule){
+        customRules.add(rule);
     }
 
     public Tag<Material> getIncorrectForToolMaterial() {
@@ -39,6 +48,8 @@ public class TexturedMiningToolItem extends DurableTexturedItem {
 
         if(meta != null) {
             ToolComponent toolComponent = meta.getTool();
+
+            toolComponent.setRules(customRules);
 
             toolComponent.addRule(minableByTool, miningSpeed, true);
             toolComponent.addRule(incorrectForToolMaterial, null, false);

@@ -1,4 +1,4 @@
-package com.eclectusstudio.pantheon.item.equipment;
+package com.eclectusstudio.pantheon.item.armor;
 
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
