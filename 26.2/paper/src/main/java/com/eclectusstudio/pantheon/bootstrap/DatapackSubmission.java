@@ -14,6 +14,7 @@ public final class DatapackSubmission {
         DATAPACK.getDamageTypes().addAll(datapack.getDamageTypes());
         DATAPACK.getFrogVariants().addAll(datapack.getFrogVariants());
         DATAPACK.getJukeboxSongs().addAll(datapack.getJukeboxSongs());
+        DATAPACK.getPaintingVariants().addAll(datapack.getPaintingVariants());
         DATAPACK.getPigVariants().addAll(datapack.getPigVariants());
         DATAPACK.getWolfSoundVariants().addAll(datapack.getWolfSoundVariants());
         DATAPACK.getWolfVariants().addAll(datapack.getWolfVariants());

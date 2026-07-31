@@ -18,6 +18,9 @@ public class JukeboxSong {
         this.location = location;
         this.soundID = soundID;
         this.description = description;
+        if (lengthInSeconds <= 0) {
+            throw new IllegalStateException("Length in seconds must be positive");
+        }
         length_in_seconds = lengthInSeconds;
         if (!(comparatorOutput >= 0 && comparatorOutput <= 15)) {
             throw new IllegalStateException("Redstone output MUST be between or 0 and 15");

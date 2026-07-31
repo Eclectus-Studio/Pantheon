@@ -6,6 +6,7 @@ import com.eclectusstudio.pantheon.common.data.cow_variant.CowVariant;
 import com.eclectusstudio.pantheon.common.data.damage_type.DamageType;
 import com.eclectusstudio.pantheon.common.data.frog_variant.FrogVariant;
 import com.eclectusstudio.pantheon.common.data.jukebox_song.JukeboxSong;
+import com.eclectusstudio.pantheon.common.data.painting_variant.PaintingVariant;
 import com.eclectusstudio.pantheon.common.data.pig_variant.PigVariant;
 import com.eclectusstudio.pantheon.common.data.wolf_sound_variant.WolfSoundVariant;
 import com.eclectusstudio.pantheon.common.data.wolf_variant.WolfVariant;
@@ -22,6 +23,7 @@ public class Datapack {
     private final List<DamageType> damageTypes;
     private final List<FrogVariant> frogVariants;
     private final List<JukeboxSong> jukeboxSongs;
+    private final List<PaintingVariant> paintingVariants;
     private final List<PigVariant> pigVariants;
     private final List<WolfSoundVariant> wolfSoundVariants;
     private final List<WolfVariant> wolfVariants;
@@ -35,6 +37,7 @@ public class Datapack {
         damageTypes = new ArrayList<>();
         frogVariants = new ArrayList<>();
         jukeboxSongs = new ArrayList<>();
+        paintingVariants = new ArrayList<>();
         pigVariants = new ArrayList<>();
         wolfSoundVariants = new ArrayList<>();
         wolfVariants = new ArrayList<>();
@@ -64,6 +67,10 @@ public class Datapack {
 
     public void addJukeboxSong(JukeboxSong song){
         jukeboxSongs.add(song);
+    }
+
+    public void addPaintingVariant(PaintingVariant variant) {
+        paintingVariants.add(variant);
     }
 
     public void addPigVariant(PigVariant variant){
@@ -108,6 +115,10 @@ public class Datapack {
 
     public List<JukeboxSong> getJukeboxSongs() {
         return jukeboxSongs;
+    }
+
+    public List<PaintingVariant> getPaintingVariants() {
+        return paintingVariants;
     }
 
     public List<PigVariant> getPigVariants() {

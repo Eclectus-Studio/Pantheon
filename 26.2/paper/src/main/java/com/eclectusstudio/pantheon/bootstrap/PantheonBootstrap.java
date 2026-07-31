@@ -1,6 +1,8 @@
 package com.eclectusstudio.pantheon.bootstrap;
 
 import com.eclectusstudio.pantheon.bootstrap.adapters.damage.DamageTypeAdapter;
+import com.eclectusstudio.pantheon.bootstrap.adapters.jukeboxsong.JukeboxSongAdapter;
+import com.eclectusstudio.pantheon.bootstrap.adapters.painting.PaintingVariantAdapter;
 import com.eclectusstudio.pantheon.bootstrap.adapters.variants.*;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
@@ -85,6 +87,22 @@ public class PantheonBootstrap implements PluginBootstrap {
             for (var damageType : DatapackSubmission.getDatapack().getDamageTypes()) {
                 TypedKey<org.bukkit.damage.DamageType> key = toTypedKey(damageType.getLocation(), RegistryKey.DAMAGE_TYPE);
                 event.registry().register(key, builder -> DamageTypeAdapter.apply(damageType, builder));
+            }
+        }));
+
+        // Paintings
+        manager.registerEventHandler(RegistryEvents.PAINTING_VARIANT.compose().newHandler(event -> {
+            for (var variant : DatapackSubmission.getDatapack().getPaintingVariants()) {
+                TypedKey<org.bukkit.Art> key = toTypedKey(variant.getAssetID(), RegistryKey.PAINTING_VARIANT);
+                event.registry().register(key, builder -> PaintingVariantAdapter.apply(variant, builder));
+            }
+        }));
+
+        // Jukebox songs
+        manager.registerEventHandler(RegistryEvents.JUKEBOX_SONG.compose().newHandler(event -> {
+            for (var song : DatapackSubmission.getDatapack().getJukeboxSongs()) {
+                TypedKey<org.bukkit.JukeboxSong> key = toTypedKey(song.getLocation(), RegistryKey.JUKEBOX_SONG);
+                event.registry().register(key, builder -> JukeboxSongAdapter.apply(song, builder));
             }
         }));
     }
