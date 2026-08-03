@@ -56,6 +56,8 @@ public class TexturedArmorItem extends TexturedEquipmentItem{
             meta.addAttributeModifier(Attribute.ARMOR, armorModifier);
             meta.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, armorToughnessModifier);
 
+            meta.setEnchantable(enchantability);
+
             itemStack.setItemMeta(meta);
         }
 
