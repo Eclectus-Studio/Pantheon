@@ -13,17 +13,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TexturedArmorItem extends TexturedEquipmentItem{
     private final double armor;
     private final double armorToughness;
+    private final int enchantability;
 
-    public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, Equipment equipment, EquipmentSlot slot, double armor, double armorToughness) {
+    public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, Equipment equipment, EquipmentSlot slot, double armor, double armorToughness, int enchantability) {
         super(id, itemStack, maxDamage, repairIngredient, equipment, slot);
         this.armor = armor;
         this.armorToughness = armorToughness;
+        this.enchantability = enchantability;
     }
 
-    public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, ResourceLocation equipmentResourceLocation, EquipmentSlot slot, double armor, double armorToughness) {
+    public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, ResourceLocation equipmentResourceLocation, EquipmentSlot slot, double armor, double armorToughness, int enchantability) {
         super(id, itemStack, maxDamage, repairIngredient, equipmentResourceLocation, slot);
         this.armor = armor;
         this.armorToughness = armorToughness;
+        this.enchantability = enchantability;
     }
 
     public double getArmor() {

@@ -8,15 +8,15 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class TexturedChestplateItem extends TexturedArmorItem {
-    public TexturedChestplateItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, Equipment equipment, double armor, double armorToughness) {
-        super(id, itemStack, maxDamage, repairIngredient, equipment, EquipmentSlot.CHEST, armor, armorToughness);
+    public TexturedChestplateItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, Equipment equipment, double armor, double armorToughness, int enchantability) {
+        super(id, itemStack, maxDamage, repairIngredient, equipment, EquipmentSlot.CHEST, armor, armorToughness, enchantability);
 
         this.setDamageOnHurt(true);
         this.setEquipOnInteract(true);
     }
 
-    public TexturedChestplateItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, ResourceLocation equipmentResourceLocation, double armor, double armorToughness) {
-        super(id, itemStack, maxDamage, repairIngredient, equipmentResourceLocation, EquipmentSlot.CHEST, armor, armorToughness);
+    public TexturedChestplateItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, ResourceLocation equipmentResourceLocation, double armor, double armorToughness, int enchantability) {
+        super(id, itemStack, maxDamage, repairIngredient, equipmentResourceLocation, EquipmentSlot.CHEST, armor, armorToughness, enchantability);
 
         this.setDamageOnHurt(true);
         this.setEquipOnInteract(true);
