@@ -19,13 +19,13 @@ public class TexturedHorseArmorItem extends TexturedArmorItem {
             TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.SKELETON_HORSE.getKey())
     );
 
-    public TexturedHorseArmorItem(ResourceLocation id, ItemStack itemStack, Equipment equipment, EquipmentSlot slot, double armor, double armorToughness, Integer enchantability) {
-        super(id, itemStack, null, null, equipment, slot, armor, armorToughness, enchantability);
+    public TexturedHorseArmorItem(ResourceLocation id, ItemStack itemStack, Equipment equipment, double armor, double armorToughness) {
+        super(id, itemStack, null, null, equipment, EquipmentSlot.BODY, armor, armorToughness, null);
         this.setAllowedEntities(customSet);
     }
 
-    public TexturedHorseArmorItem(ResourceLocation id, ItemStack itemStack, ResourceLocation equipmentResourceLocation, EquipmentSlot slot, double armor, double armorToughness, Integer enchantability) {
-        super(id, itemStack, null, null, equipmentResourceLocation, slot, armor, armorToughness, enchantability);
+    public TexturedHorseArmorItem(ResourceLocation id, ItemStack itemStack, ResourceLocation equipmentResourceLocation, double armor, double armorToughness) {
+        super(id, itemStack, null, null, equipmentResourceLocation, EquipmentSlot.BODY, armor, armorToughness, null);
         this.setAllowedEntities(customSet);
     }
 }

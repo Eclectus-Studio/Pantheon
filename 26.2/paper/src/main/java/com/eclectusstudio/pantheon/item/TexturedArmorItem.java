@@ -14,6 +14,7 @@ public class TexturedArmorItem extends TexturedEquipmentItem{
     private final double armor;
     private final double armorToughness;
     private final Integer enchantability;
+    private Float knockbackResistance;
 
     public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, Integer maxDamage, ItemStack repairIngredient, Equipment equipment, EquipmentSlot slot, double armor, double armorToughness, Integer enchantability) {
         super(id, itemStack, maxDamage, repairIngredient, equipment, slot);
@@ -29,12 +30,20 @@ public class TexturedArmorItem extends TexturedEquipmentItem{
         this.enchantability = enchantability;
     }
 
+    public void setKnockbackResistance(Float knockbackResistance) {
+        this.knockbackResistance = knockbackResistance;
+    }
+
     public double getArmor() {
         return armor;
     }
 
     public double getArmorToughness() {
         return armorToughness;
+    }
+
+    public Float getKnockbackResistance() {
+        return knockbackResistance;
     }
 
     @Override
@@ -58,6 +67,18 @@ public class TexturedArmorItem extends TexturedEquipmentItem{
 
             if(enchantability != null) {
                 meta.setEnchantable(enchantability);
+            }
+
+            if(knockbackResistance != null) {
+                meta.addAttributeModifier(
+                        Attribute.KNOCKBACK_RESISTANCE,
+                        new AttributeModifier(
+                                new NamespacedKey(getId().getNamespace(), "knockback_resistance"),
+                                knockbackResistance.doubleValue(),
+                                AttributeModifier.Operation.ADD_NUMBER,
+                                slotGroup
+                        )
+                        );
             }
 
             itemStack.setItemMeta(meta);
