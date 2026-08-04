@@ -19,13 +19,13 @@ public class TexturedNautilusArmorItem extends TexturedArmorItem {
             TypedKey.create(RegistryKey.ENTITY_TYPE, EntityType.ZOMBIE_NAUTILUS.getKey())
     );
 
-    public TexturedNautilusArmorItem(ResourceLocation id, ItemStack itemStack, ItemStack repairIngredient, Equipment equipment,double armor, double armorToughness) {
-        super(id, itemStack, null, repairIngredient, equipment, EquipmentSlot.BODY, armor, armorToughness, null);
+    public TexturedNautilusArmorItem(ResourceLocation id, ItemStack itemStack, Equipment equipment,double armor, double armorToughness) {
+        super(id, itemStack, null, null, equipment, EquipmentSlot.BODY, armor, armorToughness, null);
         this.setAllowedEntities(customSet);
     }
 
-    public TexturedNautilusArmorItem(ResourceLocation id, ItemStack itemStack, ItemStack repairIngredient, ResourceLocation equipmentResourceLocation, double armor, double armorToughness) {
-        super(id, itemStack, null, repairIngredient, equipmentResourceLocation, EquipmentSlot.BODY, armor, armorToughness, null);
+    public TexturedNautilusArmorItem(ResourceLocation id, ItemStack itemStack, ResourceLocation equipmentResourceLocation, double armor, double armorToughness) {
+        super(id, itemStack, null, null, equipmentResourceLocation, EquipmentSlot.BODY, armor, armorToughness, null);
         this.setAllowedEntities(customSet);
     }
 }
