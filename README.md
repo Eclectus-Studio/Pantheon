@@ -4,7 +4,7 @@ A powerful, developer-first Minecraft plugin framework designed to handle custom
 
 ## Features
 
-* **Pure Java Definition:** Create custom items, blocks, food, tools, and mob variants entirely in Java code. No tedious manual JSON writing for data packs or resource packs.
+* **Pure Java Definition:** Create custom items, food, tools, and mob variants entirely in Java code. No tedious manual JSON writing for data packs or resource packs.
 * **Automated Resource Pack Builder:** Automatically generates textures, models, overrides, and language files on server startup.
 * **Data Pack Integration:** Register custom recipes, loot tables, advancements, and dimensions via Java that hook directly into the server's data pack registry.
 * **Mob Variants:** Dynamically add custom entity textures and models (utilizing core shaders or OptiFine/Entity Texture Features formatting) directly through the API.
@@ -40,6 +40,6 @@ dependencies {
 Ex:
 ```gradle
 dependencies {
-    compileOnly("com.github.Eclectus-Studio.Pantheon:paper:Alpha-0.2.2")
+    compileOnly("com.github.Eclectus-Studio.Pantheon:paper:Alpha-0.2.7")
 }
 ```
