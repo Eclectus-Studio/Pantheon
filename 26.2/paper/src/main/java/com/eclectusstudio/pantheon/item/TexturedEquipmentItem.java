@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class TexturedEquipmentItem extends DurableTexturedItem {
+public abstract class TexturedEquipmentItem extends DurableTexturedItem {
 
     private final ResourceLocation equipmentResourceLocation;
 

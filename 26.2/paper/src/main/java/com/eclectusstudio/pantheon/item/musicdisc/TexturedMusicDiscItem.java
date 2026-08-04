@@ -14,7 +14,7 @@ import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 public class TexturedMusicDiscItem extends TexturedItem {
     private final JukeboxSong song;
 
-    protected TexturedMusicDiscItem(ResourceLocation id, ItemStack itemStack, ResourceLocation songLocation) {
+    public TexturedMusicDiscItem(ResourceLocation id, ItemStack itemStack, ResourceLocation songLocation) {
         super(id, itemStack);
         song = RegistryAccess.registryAccess().getRegistry(RegistryKey.JUKEBOX_SONG).getOrThrow(toKey(songLocation));
     }

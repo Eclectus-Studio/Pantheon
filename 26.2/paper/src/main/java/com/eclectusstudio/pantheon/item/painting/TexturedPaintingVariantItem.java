@@ -15,7 +15,7 @@ import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 public class TexturedPaintingVariantItem extends TexturedItem {
     private final ResourceLocation paintingvariant;
 
-    protected TexturedPaintingVariantItem(ResourceLocation id, ItemStack itemStack, PaintingVariant variant) {
+    public TexturedPaintingVariantItem(ResourceLocation id, ItemStack itemStack, PaintingVariant variant) {
         if(itemStack.getType() != Material.PAINTING){
             throw new IllegalArgumentException("Painting variants must be item type of painting");
         }
@@ -24,7 +24,7 @@ public class TexturedPaintingVariantItem extends TexturedItem {
         paintingvariant = variant.getAssetID();
     }
 
-    protected TexturedPaintingVariantItem(ResourceLocation id, ItemStack itemStack, ResourceLocation variant) {
+    public TexturedPaintingVariantItem(ResourceLocation id, ItemStack itemStack, ResourceLocation variant) {
         super(id, itemStack);
         paintingvariant = variant;
     }

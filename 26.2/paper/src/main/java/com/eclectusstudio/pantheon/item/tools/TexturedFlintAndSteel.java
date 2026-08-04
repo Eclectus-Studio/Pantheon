@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class TexturedFlintAndSteel extends DurableTexturedItem {
-    protected TexturedFlintAndSteel(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial) {
+    public TexturedFlintAndSteel(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial) {
         if(Material.FLINT_AND_STEEL != itemStack.getType()) {
             throw new IllegalArgumentException("Base item must be flint and steel");
         }

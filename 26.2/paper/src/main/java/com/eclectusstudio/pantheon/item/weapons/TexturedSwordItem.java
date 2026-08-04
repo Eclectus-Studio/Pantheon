@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public class TexturedSwordItem extends TexturedWeaponItem {
-    protected TexturedSwordItem(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial, double attackDamage, double attackSpeed) {
+    public TexturedSwordItem(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial, double attackDamage, double attackSpeed) {
         List<Material> SWORDS = List.of(
                 Material.COPPER_SWORD,
                 Material.DIAMOND_SWORD,

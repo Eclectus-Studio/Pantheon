@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class DurableTexturedItem extends TexturedItem {
+public abstract class DurableTexturedItem extends TexturedItem {
     private final Integer maxDurability;
     private final ItemStack repairMaterial;
 

@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataType;
 import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 
 public abstract class TexturedItem extends Item{
-    protected TexturedItem(ResourceLocation id, ItemStack itemStack) {
+    public TexturedItem(ResourceLocation id, ItemStack itemStack) {
         super(id, itemStack);
     }
 
