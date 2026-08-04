@@ -48,7 +48,7 @@ public abstract class TexturedArmorItem extends TexturedEquipmentItem{
 
     @Override
     public ItemStack createStack(){
-        ItemStack itemStack = super.getItemStack().clone();
+        ItemStack itemStack = super.createStack().clone();
         ItemMeta meta = itemStack.getItemMeta();
 
         if (meta != null) {

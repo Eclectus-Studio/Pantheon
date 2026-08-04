@@ -18,11 +18,17 @@ public class TexturedMiningToolItem extends DurableTexturedItem {
 
     private final float miningSpeed;
 
+    private Integer damagePerBlock = 1;
+
     public TexturedMiningToolItem(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial, Tag<Material> incorrectForToolMaterial, Tag<Material> minableByTool, float miningSpeed) {
         super(id, itemStack, maxDurability, repairMaterial);
         this.incorrectForToolMaterial = incorrectForToolMaterial;
         this.minableByTool = minableByTool;
         this.miningSpeed = miningSpeed;
+    }
+
+    public void setDamagePerBlock(Integer damagePerBlock) {
+        this.damagePerBlock = damagePerBlock;
     }
 
     public void addCustomToolRule(ToolComponent.ToolRule rule){
@@ -41,6 +47,10 @@ public class TexturedMiningToolItem extends DurableTexturedItem {
         return miningSpeed;
     }
 
+    public Integer getDamagePerBlock() {
+        return damagePerBlock;
+    }
+
     @Override
     public ItemStack createStack(){
         ItemStack itemStack = super.createStack().clone();
@@ -51,6 +61,7 @@ public class TexturedMiningToolItem extends DurableTexturedItem {
 
             toolComponent.setRules(customRules);
 
+            toolComponent.setDamagePerBlock(damagePerBlock);
             toolComponent.addRule(minableByTool, miningSpeed, true);
             toolComponent.addRule(incorrectForToolMaterial, null, false);
 

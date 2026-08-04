@@ -43,19 +43,14 @@ public class GetCustomItemCommand implements BasicCommand {
     }
 
     @Override
-    public Collection<String> suggest(
-            CommandSourceStack source,
-            String[] args
-    ) {
-
-        if (args.length != 1) {
+    public Collection<String> suggest(CommandSourceStack source, String[] args) {
+        if (args.length > 1) {
             return List.of();
         }
 
-        String current = args[0].toLowerCase();
+        String current = args.length == 0 ? "" : args[0].toLowerCase();
 
-        return ItemRegistry.getItems()
-                .stream()
+        return ItemRegistry.getItems().stream()
                 .map(item -> item.getId().toString())
                 .filter(id -> id.toLowerCase().startsWith(current))
                 .toList();

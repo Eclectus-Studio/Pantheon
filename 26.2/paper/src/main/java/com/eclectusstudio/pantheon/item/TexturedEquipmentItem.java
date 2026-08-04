@@ -157,28 +157,6 @@ public abstract class TexturedEquipmentItem extends DurableTexturedItem {
     @Override
     public ItemStack createStack() {
         ItemStack stack = super.createStack().clone();
-        ItemMeta meta = stack.getItemMeta();
-
-        if (meta == null) {
-            return stack;
-        }
-
-        // Handle Max Durability Component via Damageable Meta interface
-        if (meta instanceof Damageable damageable) {
-            // If it natively supports damage (Sword, Elytra, etc.)
-            damageable.setMaxDamage(super.getMaxDurability());
-        } else {
-            // For non-damageable items (e.g., Paper, Gold Nugget, Stick),
-            stack.setData(io.papermc.paper.datacomponent.DataComponentTypes.MAX_DAMAGE, super.getMaxDurability());
-
-            // Refresh meta
-            meta = stack.getItemMeta();
-        }
-
-        // Anvil Repair Ingredients
-        if (super.getRepairMaterial() != null) {
-            stack.isRepairableBy(super.getRepairMaterial());
-        }
 
         Equippable.Builder builder = Equippable.equippable(slot);
 
@@ -208,8 +186,6 @@ public abstract class TexturedEquipmentItem extends DurableTexturedItem {
                 builder.shearSound(shearingSound);
             }
         }
-
-        stack.setItemMeta(meta);
 
         if(builder != null){
             stack.setData(DataComponentTypes.EQUIPPABLE, builder.build());

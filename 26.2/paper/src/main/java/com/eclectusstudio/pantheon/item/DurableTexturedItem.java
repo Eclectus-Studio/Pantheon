@@ -20,7 +20,7 @@ public abstract class DurableTexturedItem extends TexturedItem {
         this.repairMaterial = repairMaterial;
     }
 
-    public int getMaxDurability() {
+    public Integer getMaxDurability() {
         return maxDurability;
     }
 
@@ -61,7 +61,7 @@ public abstract class DurableTexturedItem extends TexturedItem {
 
     @Override
     public ItemStack createStack(){
-        ItemStack item = super.createStack();
+        ItemStack item = super.createStack().clone();
 
         if(maxDurability != null) {
             item.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
