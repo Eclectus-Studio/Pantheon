@@ -42,7 +42,7 @@ public class TexturedEquipmentItem extends DurableTexturedItem {
     public TexturedEquipmentItem(
             ResourceLocation id,
             ItemStack itemStack,
-            int maxDamage,
+            Integer maxDamage,
             ItemStack repairIngredient,
             Equipment equipment,
             EquipmentSlot slot
@@ -55,7 +55,7 @@ public class TexturedEquipmentItem extends DurableTexturedItem {
     public TexturedEquipmentItem(
             ResourceLocation id,
             ItemStack itemStack,
-            int maxDamage,
+            Integer maxDamage,
             ItemStack repairIngredient,
             ResourceLocation equipmentResourceLocation,
             EquipmentSlot slot

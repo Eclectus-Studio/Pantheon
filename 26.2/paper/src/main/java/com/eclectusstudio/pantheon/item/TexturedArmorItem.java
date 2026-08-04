@@ -13,16 +13,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TexturedArmorItem extends TexturedEquipmentItem{
     private final double armor;
     private final double armorToughness;
-    private final int enchantability;
+    private final Integer enchantability;
 
-    public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, Equipment equipment, EquipmentSlot slot, double armor, double armorToughness, int enchantability) {
+    public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, Integer maxDamage, ItemStack repairIngredient, Equipment equipment, EquipmentSlot slot, double armor, double armorToughness, Integer enchantability) {
         super(id, itemStack, maxDamage, repairIngredient, equipment, slot);
         this.armor = armor;
         this.armorToughness = armorToughness;
         this.enchantability = enchantability;
     }
 
-    public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, int maxDamage, ItemStack repairIngredient, ResourceLocation equipmentResourceLocation, EquipmentSlot slot, double armor, double armorToughness, int enchantability) {
+    public TexturedArmorItem(ResourceLocation id, ItemStack itemStack, Integer maxDamage, ItemStack repairIngredient, ResourceLocation equipmentResourceLocation, EquipmentSlot slot, double armor, double armorToughness, Integer enchantability) {
         super(id, itemStack, maxDamage, repairIngredient, equipmentResourceLocation, slot);
         this.armor = armor;
         this.armorToughness = armorToughness;
@@ -56,7 +56,9 @@ public class TexturedArmorItem extends TexturedEquipmentItem{
             meta.addAttributeModifier(Attribute.ARMOR, armorModifier);
             meta.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, armorToughnessModifier);
 
-            meta.setEnchantable(enchantability);
+            if(enchantability != null) {
+                meta.setEnchantable(enchantability);
+            }
 
             itemStack.setItemMeta(meta);
         }

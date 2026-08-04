@@ -11,10 +11,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class DurableTexturedItem extends TexturedItem {
-    private final int maxDurability;
+    private final Integer maxDurability;
     private final ItemStack repairMaterial;
 
-    protected DurableTexturedItem(ResourceLocation id, ItemStack itemStack, int maxDurability, ItemStack repairMaterial) {
+    protected DurableTexturedItem(ResourceLocation id, ItemStack itemStack, Integer maxDurability, ItemStack repairMaterial) {
         super(id, itemStack);
         this.maxDurability = maxDurability;
         this.repairMaterial = repairMaterial;
@@ -63,10 +63,12 @@ public class DurableTexturedItem extends TexturedItem {
     public ItemStack createStack(){
         ItemStack item = super.createStack();
 
-        item.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
+        if(maxDurability != null) {
+            item.setData(DataComponentTypes.MAX_STACK_SIZE, 1);
 
-        item.setData(DataComponentTypes.MAX_DAMAGE, maxDurability);
-        item.setData(DataComponentTypes.DAMAGE, 0);
+            item.setData(DataComponentTypes.MAX_DAMAGE, maxDurability);
+            item.setData(DataComponentTypes.DAMAGE, 0);
+        }
 
         if(repairMaterial != null){
             item.isRepairableBy(repairMaterial);
