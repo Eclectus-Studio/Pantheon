@@ -13,7 +13,7 @@ public class SoundEvent {
     private boolean replace;
     private String subtitle;
 
-    private final List<SoundDefinition> sounds = new ArrayList<>();
+    private List<SoundDefinition> sounds = new ArrayList<>();
 
     public SoundEvent() {
     }
@@ -34,6 +34,21 @@ public class SoundEvent {
 
         if (sounds != null) {
             this.sounds.addAll(sounds);
+        }
+    }
+
+    public SoundEvent(
+            String id,
+            boolean replace,
+            String subtitle,
+            SoundDefinition sound
+    ) {
+        this.id = id;
+        this.replace = replace;
+        this.subtitle = subtitle;
+
+        if (sound != null) {
+            this.sounds = List.of(sound);
         }
     }
 
