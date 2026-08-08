@@ -2,11 +2,9 @@ package com.eclectusstudio.pantheon.bootstrap.adapters.jukeboxsong;
 
 import com.eclectusstudio.pantheon.common.data.jukebox_song.JukeboxSong;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
-import io.papermc.paper.registry.RegistryKey;
-import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.data.JukeboxSongRegistryEntry;
+import io.papermc.paper.registry.data.SoundEventRegistryEntry;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Sound;
 
 import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 
@@ -16,10 +14,15 @@ public final class JukeboxSongAdapter {
 
     public static void apply(JukeboxSong song, JukeboxSongRegistryEntry.Builder builder) {
         ResourceLocation soundLocation = ResourceLocation.fromString(song.getSoundID());
-        TypedKey<Sound> soundKey = TypedKey.create(RegistryKey.SOUND_EVENT, toKey(soundLocation));
+        var soundKey = toKey(soundLocation);
 
         builder
-                .soundEvent(soundKey)
+                .soundEvent(factory -> {
+                    SoundEventRegistryEntry.Builder soundBuilder = factory.empty();
+                    soundBuilder.location(soundKey);
+                    // fixedRange left unset (null) — optional per the interface, only needed
+                    // if this sound should ignore normal distance falloff (e.g. always audible).
+                })
                 .description(Component.text(song.getDescription()))
                 .lengthInSeconds(song.getLength_in_seconds())
                 .comparatorOutput(song.getComparator_output());

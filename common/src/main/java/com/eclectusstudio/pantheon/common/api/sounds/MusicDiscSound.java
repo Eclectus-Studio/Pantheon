@@ -7,7 +7,7 @@ import com.eclectusstudio.pantheon.common.resource.sounds.SoundType;
 public class MusicDiscSound extends SoundEvent {
 
     public MusicDiscSound(String namespace, String name) {
-        super("music_disc." + name);
+        super(namespace + ":music_disc." + name);
 
         String soundPath = namespace + ":music/" + name;
 

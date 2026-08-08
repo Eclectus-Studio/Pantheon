@@ -14,9 +14,6 @@ public class SoundsFile {
 
     private final List<SoundEvent> soundEvents = new ArrayList<>();
 
-    public SoundsFile() {
-    }
-
     public SoundsFile(ResourceLocation location) {
         this.location = location;
     }

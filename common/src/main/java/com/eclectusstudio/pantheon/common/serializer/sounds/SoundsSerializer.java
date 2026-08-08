@@ -41,7 +41,7 @@ public final class SoundsSerializer {
             }
 
             root.add(
-                    event.getId(),
+                    stripNamespace(event.getId()),
                     serializeEvent(event)
             );
         }
@@ -185,5 +185,10 @@ public final class SoundsSerializer {
                 && !sound.isPreload()
                 && (sound.getType() == null
                 || sound.getType() == SoundType.FILE);
+    }
+
+    private static String stripNamespace(String id) {
+        int separatorIndex = id.indexOf(':');
+        return separatorIndex >= 0 ? id.substring(separatorIndex + 1) : id;
     }
 }

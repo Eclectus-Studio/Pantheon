@@ -17,6 +17,7 @@ public class PantheonBootstrap implements PluginBootstrap {
     @Override
     public void bootstrap(BootstrapContext context) {
         var manager = context.getLifecycleManager();
+        //Sounds
 
         // Animal Variants
         manager.registerEventHandler(RegistryEvents.CAT_VARIANT.compose().newHandler(event -> {
