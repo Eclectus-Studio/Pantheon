@@ -104,8 +104,12 @@ public abstract class TexturedEquipmentItem extends DurableTexturedItem {
     public void setAllowedEntity(EntityType entityType) {
         RegistryKeySet<EntityType> customSet = RegistrySet.keySet(
                 RegistryKey.ENTITY_TYPE,
-                TypedKey.create(RegistryKey.ENTITY_TYPE, entityType.getKey())
-        );;
+                new TypedKey[]{
+                        TypedKey.create(RegistryKey.ENTITY_TYPE, entityType.getKey())
+                }
+        );
+
+        this.allowedEntities = customSet;
     }
 
     public boolean isDispensable() {
