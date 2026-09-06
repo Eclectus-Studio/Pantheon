@@ -55,7 +55,7 @@ public class Pantheon {
 
         server.getScheduler()
                 .buildTask(this, handler::buildResourcePack)
-                .delay(Duration.ofMillis(500))
+                .delay(Duration.ofMillis(1500))
                 .schedule();
     }
 

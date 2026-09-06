@@ -1,10 +1,11 @@
 package com.eclectusstudio.pantheon;
 
+import com.eclectusstudio.pantheon.commands.CustomItemsCommand;
 import com.eclectusstudio.pantheon.commands.GetCustomItemCommand;
+import com.eclectusstudio.pantheon.event.CustomItemsListener;
 import com.eclectusstudio.pantheon.event.ItemListener;
 import com.eclectusstudio.pantheon.event.PlayerJoinEventHandler;
 import com.eclectusstudio.pantheon.event.ServerLoadEventHandler;
-import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -27,6 +28,7 @@ public final class Pantheon extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ServerLoadEventHandler(), this);
         Bukkit.getPluginManager().registerEvents(new ItemListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinEventHandler(), this);
+        Bukkit.getPluginManager().registerEvents(new CustomItemsListener(), this);
 
         //Commands
         getLifecycleManager().registerEventHandler(
@@ -35,6 +37,10 @@ public final class Pantheon extends JavaPlugin {
                     event.registrar().register(
                             "getitem",
                             new GetCustomItemCommand()
+                    );
+                    event.registrar().register(
+                            "customitems",
+                            new CustomItemsCommand()
                     );
                 }
         );
