@@ -6,16 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WaypointStyle {
+    private final ResourceLocation resourceLocation;
 
     private int nearDistance = 128;
     private int farDistance = 332;
 
     private final List<ResourceLocation> sprites = new ArrayList<>();
 
-    public WaypointStyle() {
+    public WaypointStyle(ResourceLocation resourceLocation) {
+        this.resourceLocation = resourceLocation;
     }
 
-    public WaypointStyle(int nearDistance, int farDistance) {
+    public WaypointStyle(ResourceLocation resourceLocation, int nearDistance, int farDistance) {
+        this.resourceLocation = resourceLocation;
         this.nearDistance = nearDistance;
         this.farDistance = farDistance;
     }
@@ -23,6 +26,10 @@ public class WaypointStyle {
     public WaypointStyle addSprite(ResourceLocation sprite) {
         sprites.add(sprite);
         return this;
+    }
+
+    public ResourceLocation getResourceLocation() {
+        return resourceLocation;
     }
 
     public int getNearDistance() {

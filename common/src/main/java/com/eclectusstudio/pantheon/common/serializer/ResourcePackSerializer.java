@@ -4,12 +4,16 @@ import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.ResourcePack;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import com.eclectusstudio.pantheon.common.resource.fonts.Font;
+import com.eclectusstudio.pantheon.common.resource.language.Language;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
+import com.eclectusstudio.pantheon.common.resource.waypointstyle.WaypointStyle;
 import com.eclectusstudio.pantheon.common.serializer.equipment.EquipmentSerializer;
 import com.eclectusstudio.pantheon.common.serializer.font.FontSerializer;
 import com.eclectusstudio.pantheon.common.serializer.items.ItemsSerializer;
+import com.eclectusstudio.pantheon.common.serializer.language.LanguageSerializer;
 import com.eclectusstudio.pantheon.common.serializer.models.ModelSerializer;
 import com.eclectusstudio.pantheon.common.serializer.sounds.SoundsSerializer;
+import com.eclectusstudio.pantheon.common.serializer.waypointstyle.WaypointStyleSerializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,6 +71,27 @@ public class ResourcePackSerializer {
                 root.toPath().resolve("assets"),
                 pack.getSoundsFile()
         );
+
+        for (WaypointStyle waypointStyle :
+                pack.getWaypointStyles()) {
+
+            WaypointStyleSerializer.serialize(
+                    root.toPath().resolve("assets"),
+                    waypointStyle.getResourceLocation().getNamespace(),
+                    waypointStyle.getResourceLocation().getPath(),
+                    waypointStyle
+            );
+        }
+
+        for (Map.Entry<Language, ResourceLocation> entry :
+                pack.getLanguages().entrySet()) {
+
+            LanguageSerializer.serialize(
+                    root.toPath().resolve("assets"),
+                    entry.getValue().getNamespace(),
+                    entry.getKey()
+            );
+        }
 
         // LanguageSerializer.serialize(...)
     }

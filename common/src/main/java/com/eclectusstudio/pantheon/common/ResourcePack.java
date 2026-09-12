@@ -5,10 +5,14 @@ import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipments;
 import com.eclectusstudio.pantheon.common.resource.items.ItemModels;
 import com.eclectusstudio.pantheon.common.resource.items.ResourcePackItems;
+import com.eclectusstudio.pantheon.common.resource.language.Language;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
 import com.eclectusstudio.pantheon.common.resource.sounds.SoundsFile;
+import com.eclectusstudio.pantheon.common.resource.waypointstyle.WaypointStyle;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class ResourcePack {
@@ -23,6 +27,9 @@ public final class ResourcePack {
 
     private SoundsFile soundsFile;
 
+    private final List<WaypointStyle> waypointStyles;
+
+    private final Map<Language, ResourceLocation> languages;
 
     public ResourcePack(PackMCMeta meta) {
 
@@ -33,6 +40,8 @@ public final class ResourcePack {
         this.models = new HashMap<>();
 
         this.fonts = new HashMap<>();
+        waypointStyles = new ArrayList<>();
+        languages = new HashMap<>();
     }
 
 
@@ -91,6 +100,18 @@ public final class ResourcePack {
         return this;
     }
 
+    public ResourcePack addWaypointStyle(WaypointStyle style){
+        waypointStyles.add(style);
+
+        return this;
+    }
+
+    public ResourcePack addLanguage(Language language, ResourceLocation location){
+        languages.put(language, location);
+
+        return this;
+    }
+
     public void setSoundsFile(SoundsFile soundsFile) {
         this.soundsFile = soundsFile;
     }
@@ -121,5 +142,13 @@ public final class ResourcePack {
 
     public SoundsFile getSoundsFile() {
         return soundsFile;
+    }
+
+    public List<WaypointStyle> getWaypointStyles() {
+        return waypointStyles;
+    }
+
+    public Map<Language, ResourceLocation> getLanguages() {
+        return languages;
     }
 }

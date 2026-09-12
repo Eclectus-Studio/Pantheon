@@ -1,13 +1,15 @@
 package com.eclectusstudio.pantheon.common.resource.language;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Language {
-    private Languages language;
-    private List<TranslationResult> translations;
+    private final Languages language;
+    private final List<TranslationResult> translations;
 
     public Language(Languages language){
         this.language = language;
+        translations = new ArrayList<>();
     }
 
     public Languages getLanguage() {
