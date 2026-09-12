@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data.cat_variant.CatVariant;
+import com.eclectusstudio.pantheon.data.cat_variant.CatVariant;
 import io.papermc.paper.registry.data.CatTypeRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.data.util.Conversions;

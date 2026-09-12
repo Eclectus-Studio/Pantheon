@@ -2,16 +2,20 @@ package com.eclectusstudio.pantheon.common.serializer;
 
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.ResourcePack;
+import com.eclectusstudio.pantheon.common.resource.atlas.Atlas;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import com.eclectusstudio.pantheon.common.resource.fonts.Font;
 import com.eclectusstudio.pantheon.common.resource.language.Language;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
+import com.eclectusstudio.pantheon.common.resource.regioncompliance.RegionComplianceWarning;
 import com.eclectusstudio.pantheon.common.resource.waypointstyle.WaypointStyle;
+import com.eclectusstudio.pantheon.common.serializer.atlas.AtlasSerializer;
 import com.eclectusstudio.pantheon.common.serializer.equipment.EquipmentSerializer;
 import com.eclectusstudio.pantheon.common.serializer.font.FontSerializer;
 import com.eclectusstudio.pantheon.common.serializer.items.ItemsSerializer;
 import com.eclectusstudio.pantheon.common.serializer.language.LanguageSerializer;
 import com.eclectusstudio.pantheon.common.serializer.models.ModelSerializer;
+import com.eclectusstudio.pantheon.common.serializer.regioncompliance.RegionComplianceWarningSerializer;
 import com.eclectusstudio.pantheon.common.serializer.sounds.SoundsSerializer;
 import com.eclectusstudio.pantheon.common.serializer.waypointstyle.WaypointStyleSerializer;
 
@@ -93,6 +97,28 @@ public class ResourcePackSerializer {
             );
         }
 
+        for (RegionComplianceWarning warning :
+                pack.getRegionComplianceWarnings()) {
+
+            RegionComplianceWarningSerializer.serialize(
+                    root.toPath().resolve("assets"),
+                    warning.getResourceLocation().getNamespace(),
+                    pack.getRegionComplianceWarnings()
+            );
+
+            break;
+        }
+
+        for (Atlas atlas :
+                pack.getAtlases()) {
+
+            AtlasSerializer.serialize(
+                    root.toPath().resolve("assets"),
+                    atlas.getResourceLocation().getNamespace(),
+                    atlas.getResourceLocation().getPath(),
+                    atlas
+            );
+        }
         // LanguageSerializer.serialize(...)
     }
 }

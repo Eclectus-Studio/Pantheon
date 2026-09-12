@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.painting;
 
-import com.eclectusstudio.pantheon.common.data.painting_variant.PaintingVariant;
+import com.eclectusstudio.pantheon.data.painting_variant.PaintingVariant;
 import io.papermc.paper.registry.data.PaintingVariantRegistryEntry;
 import net.kyori.adventure.text.Component;
 

@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data.frog_variant.FrogVariant;
+import com.eclectusstudio.pantheon.data.frog_variant.FrogVariant;
 import io.papermc.paper.registry.data.FrogVariantRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.data.util.Conversions;

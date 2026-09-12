@@ -1,5 +1,6 @@
 package com.eclectusstudio.pantheon.common;
 
+import com.eclectusstudio.pantheon.common.resource.atlas.Atlas;
 import com.eclectusstudio.pantheon.common.resource.fonts.Font;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipments;
@@ -7,6 +8,7 @@ import com.eclectusstudio.pantheon.common.resource.items.ItemModels;
 import com.eclectusstudio.pantheon.common.resource.items.ResourcePackItems;
 import com.eclectusstudio.pantheon.common.resource.language.Language;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
+import com.eclectusstudio.pantheon.common.resource.regioncompliance.RegionComplianceWarning;
 import com.eclectusstudio.pantheon.common.resource.sounds.SoundsFile;
 import com.eclectusstudio.pantheon.common.resource.waypointstyle.WaypointStyle;
 
@@ -30,6 +32,10 @@ public final class ResourcePack {
     private final List<WaypointStyle> waypointStyles;
 
     private final Map<Language, ResourceLocation> languages;
+    
+    private final List<RegionComplianceWarning> regionComplianceWarnings;
+
+    private final List<Atlas> atlases;
 
     public ResourcePack(PackMCMeta meta) {
 
@@ -42,6 +48,8 @@ public final class ResourcePack {
         this.fonts = new HashMap<>();
         waypointStyles = new ArrayList<>();
         languages = new HashMap<>();
+        regionComplianceWarnings = new ArrayList<>();
+        atlases = new ArrayList<>();
     }
 
 
@@ -112,6 +120,19 @@ public final class ResourcePack {
         return this;
     }
 
+    public ResourcePack addRegionComplianceWarning(RegionComplianceWarning regionComplianceWarning){
+        regionComplianceWarnings.add(regionComplianceWarning);
+
+        return this;
+    }
+
+    public ResourcePack addAtlas(Atlas atlas) {
+        atlases.add(atlas);
+
+        return this;
+    }
+
+
     public void setSoundsFile(SoundsFile soundsFile) {
         this.soundsFile = soundsFile;
     }
@@ -150,5 +171,13 @@ public final class ResourcePack {
 
     public Map<Language, ResourceLocation> getLanguages() {
         return languages;
+    }
+
+    public List<RegionComplianceWarning> getRegionComplianceWarnings() {
+        return regionComplianceWarnings;
+    }
+
+    public List<Atlas> getAtlases() {
+        return atlases;
     }
 }

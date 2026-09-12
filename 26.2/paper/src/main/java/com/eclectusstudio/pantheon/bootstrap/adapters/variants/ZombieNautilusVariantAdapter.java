@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data.zombie_nautilus_variant.ZombieNautilusVariant;
+import com.eclectusstudio.pantheon.data.zombie_nautilus_variant.ZombieNautilusVariant;
 import io.papermc.paper.registry.data.ZombieNautilusVariantRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.data.util.Conversions;
@@ -39,7 +39,7 @@ public final class ZombieNautilusVariantAdapter {
     }
 
     private static ZombieNautilusVariantRegistryEntry.Model toModel(
-            com.eclectusstudio.pantheon.common.data.zombie_nautilus_variant.ZombieNautilusModelVariant modelVariant
+            com.eclectusstudio.pantheon.data.zombie_nautilus_variant.ZombieNautilusModelVariant modelVariant
     ) {
         return switch (modelVariant) {
             case NORMAL -> ZombieNautilusVariantRegistryEntry.Model.NORMAL;

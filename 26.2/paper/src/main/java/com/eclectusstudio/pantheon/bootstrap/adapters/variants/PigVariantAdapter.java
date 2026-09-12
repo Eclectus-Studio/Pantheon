@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data.pig_variant.PigVariant;
+import com.eclectusstudio.pantheon.data.pig_variant.PigVariant;
 import io.papermc.paper.registry.data.PigVariantRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.data.util.Conversions;
@@ -40,7 +40,7 @@ public final class PigVariantAdapter {
     }
 
     private static PigVariantRegistryEntry.Model toModel(
-            com.eclectusstudio.pantheon.common.data.pig_variant.PigModelVariant modelVariant
+            com.eclectusstudio.pantheon.data.pig_variant.PigModelVariant modelVariant
     ) {
         return switch (modelVariant) {
             case NORMAL -> PigVariantRegistryEntry.Model.NORMAL;

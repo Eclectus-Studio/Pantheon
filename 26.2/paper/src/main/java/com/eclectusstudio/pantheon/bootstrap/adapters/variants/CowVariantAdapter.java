@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data.cow_variant.CowVariant;
+import com.eclectusstudio.pantheon.data.cow_variant.CowVariant;
 import io.papermc.paper.registry.data.CowVariantRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.data.util.Conversions;
@@ -40,7 +40,7 @@ public final class CowVariantAdapter {
     }
 
     private static CowVariantRegistryEntry.Model toModel(
-            com.eclectusstudio.pantheon.common.data.cow_variant.CowModelVariant modelVariant
+            com.eclectusstudio.pantheon.data.cow_variant.CowModelVariant modelVariant
     ) {
         return switch (modelVariant) {
             case NORMAL -> CowVariantRegistryEntry.Model.NORMAL;

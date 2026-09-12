@@ -1,11 +1,11 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.BiomeCondition;
-import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.Condition;
-import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.ConditionTarget;
-import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.MoonBrightnessCondition;
-import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.SpawnCondition;
-import com.eclectusstudio.pantheon.common.data_common.mob_variant.spawn_condition.StructureCondition;
+import com.eclectusstudio.pantheon.data_common.mob_variant.spawn_condition.BiomeCondition;
+import com.eclectusstudio.pantheon.data_common.mob_variant.spawn_condition.Condition;
+import com.eclectusstudio.pantheon.data_common.mob_variant.spawn_condition.ConditionTarget;
+import com.eclectusstudio.pantheon.data_common.mob_variant.spawn_condition.MoonBrightnessCondition;
+import com.eclectusstudio.pantheon.data_common.mob_variant.spawn_condition.SpawnCondition;
+import com.eclectusstudio.pantheon.data_common.mob_variant.spawn_condition.StructureCondition;
 import io.papermc.paper.registry.data.util.Conversions;
 import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.core.Holder;

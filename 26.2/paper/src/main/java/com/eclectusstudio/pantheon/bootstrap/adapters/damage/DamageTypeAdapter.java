@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.damage;
 
-import com.eclectusstudio.pantheon.common.data.damage_type.DamageType;
+import com.eclectusstudio.pantheon.data.damage_type.DamageType;
 import com.eclectusstudio.pantheon.common.resource.language.TranslationKey;
 import io.papermc.paper.registry.data.DamageTypeRegistryEntry;
 
@@ -23,7 +23,7 @@ public final class DamageTypeAdapter {
     }
 
     private static org.bukkit.damage.DamageScaling toDamageScaling(
-            com.eclectusstudio.pantheon.common.data.damage_type.DamageScaling scaling
+            com.eclectusstudio.pantheon.data.damage_type.DamageScaling scaling
     ) {
         return switch (scaling) {
             case NEVER -> org.bukkit.damage.DamageScaling.NEVER;
@@ -33,7 +33,7 @@ public final class DamageTypeAdapter {
     }
 
     private static org.bukkit.damage.DamageEffect toDamageEffect(
-            com.eclectusstudio.pantheon.common.data.damage_type.DamageEffect effect
+            com.eclectusstudio.pantheon.data.damage_type.DamageEffect effect
     ) {
         return switch (effect) {
             case HURT -> org.bukkit.damage.DamageEffect.HURT;
@@ -46,7 +46,7 @@ public final class DamageTypeAdapter {
     }
 
     private static org.bukkit.damage.DeathMessageType toDeathMessageType(
-            com.eclectusstudio.pantheon.common.data.damage_type.DeathMessageType type
+            com.eclectusstudio.pantheon.data.damage_type.DeathMessageType type
     ) {
         return switch (type) {
             case DEFAULT -> org.bukkit.damage.DeathMessageType.DEFAULT;

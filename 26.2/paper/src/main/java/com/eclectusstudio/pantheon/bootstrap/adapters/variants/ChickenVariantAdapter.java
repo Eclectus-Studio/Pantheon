@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.variants;
 
-import com.eclectusstudio.pantheon.common.data.chicken_variant.ChickenVariant;
+import com.eclectusstudio.pantheon.data.chicken_variant.ChickenVariant;
 import io.papermc.paper.registry.data.ChickenVariantRegistryEntry;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.data.util.Conversions;
@@ -40,7 +40,7 @@ public final class ChickenVariantAdapter {
     }
 
     private static ChickenVariantRegistryEntry.Model toModel(
-            com.eclectusstudio.pantheon.common.data.chicken_variant.ChickenModelVariant modelVariant
+            com.eclectusstudio.pantheon.data.chicken_variant.ChickenModelVariant modelVariant
     ) {
         return switch (modelVariant) {
             case NORMAL -> ChickenVariantRegistryEntry.Model.NORMAL;

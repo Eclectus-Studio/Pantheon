@@ -1,7 +1,7 @@
 package com.eclectusstudio.pantheon.item.painting;
 
 import com.eclectusstudio.pantheon.common.ResourceLocation;
-import com.eclectusstudio.pantheon.common.data.painting_variant.PaintingVariant;
+import com.eclectusstudio.pantheon.data.painting_variant.PaintingVariant;
 import com.eclectusstudio.pantheon.item.TexturedItem;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.registry.RegistryAccess;

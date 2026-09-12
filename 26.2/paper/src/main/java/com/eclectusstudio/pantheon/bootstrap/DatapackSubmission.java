@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap;
 
-import com.eclectusstudio.pantheon.common.Datapack;
+import com.eclectusstudio.pantheon.Datapack;
 
 public final class DatapackSubmission {
     private static final Datapack DATAPACK = new Datapack();

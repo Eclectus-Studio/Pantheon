@@ -1,6 +1,6 @@
 package com.eclectusstudio.pantheon.bootstrap.adapters.jukeboxsong;
 
-import com.eclectusstudio.pantheon.common.data.jukebox_song.JukeboxSong;
+import com.eclectusstudio.pantheon.data.jukebox_song.JukeboxSong;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import io.papermc.paper.registry.data.JukeboxSongRegistryEntry;
 import io.papermc.paper.registry.data.SoundEventRegistryEntry;
