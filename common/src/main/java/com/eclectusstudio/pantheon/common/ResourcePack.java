@@ -10,6 +10,7 @@ import com.eclectusstudio.pantheon.common.resource.language.Language;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
 import com.eclectusstudio.pantheon.common.resource.regioncompliance.RegionComplianceWarning;
 import com.eclectusstudio.pantheon.common.resource.sounds.SoundsFile;
+import com.eclectusstudio.pantheon.common.resource.texture.TextureMeta;
 import com.eclectusstudio.pantheon.common.resource.waypointstyle.WaypointStyle;
 
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public final class ResourcePack {
 
     private final List<Atlas> atlases;
 
+    private final List<TextureMeta> textureMetas;
+
     public ResourcePack(PackMCMeta meta) {
 
         this.metadata = meta;
@@ -50,6 +53,7 @@ public final class ResourcePack {
         languages = new HashMap<>();
         regionComplianceWarnings = new ArrayList<>();
         atlases = new ArrayList<>();
+        textureMetas = new ArrayList<>();
     }
 
 
@@ -132,9 +136,17 @@ public final class ResourcePack {
         return this;
     }
 
+    public ResourcePack addTextureMeta(TextureMeta textureMeta){
+        textureMetas.add(textureMeta);
 
-    public void setSoundsFile(SoundsFile soundsFile) {
+        return this;
+    }
+
+
+    public ResourcePack setSoundsFile(SoundsFile soundsFile) {
         this.soundsFile = soundsFile;
+
+        return this;
     }
 
     /*
@@ -179,5 +191,9 @@ public final class ResourcePack {
 
     public List<Atlas> getAtlases() {
         return atlases;
+    }
+
+    public List<TextureMeta> getTextureMetas() {
+        return textureMetas;
     }
 }

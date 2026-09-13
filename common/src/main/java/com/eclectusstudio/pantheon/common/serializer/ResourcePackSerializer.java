@@ -8,6 +8,7 @@ import com.eclectusstudio.pantheon.common.resource.fonts.Font;
 import com.eclectusstudio.pantheon.common.resource.language.Language;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
 import com.eclectusstudio.pantheon.common.resource.regioncompliance.RegionComplianceWarning;
+import com.eclectusstudio.pantheon.common.resource.texture.TextureMeta;
 import com.eclectusstudio.pantheon.common.resource.waypointstyle.WaypointStyle;
 import com.eclectusstudio.pantheon.common.serializer.atlas.AtlasSerializer;
 import com.eclectusstudio.pantheon.common.serializer.equipment.EquipmentSerializer;
@@ -17,6 +18,7 @@ import com.eclectusstudio.pantheon.common.serializer.language.LanguageSerializer
 import com.eclectusstudio.pantheon.common.serializer.models.ModelSerializer;
 import com.eclectusstudio.pantheon.common.serializer.regioncompliance.RegionComplianceWarningSerializer;
 import com.eclectusstudio.pantheon.common.serializer.sounds.SoundsSerializer;
+import com.eclectusstudio.pantheon.common.serializer.texture.TextureMetaSerializer;
 import com.eclectusstudio.pantheon.common.serializer.waypointstyle.WaypointStyleSerializer;
 
 import java.io.File;
@@ -119,6 +121,15 @@ public class ResourcePackSerializer {
                     atlas
             );
         }
-        // LanguageSerializer.serialize(...)
+
+        for (TextureMeta textureMeta :
+                pack.getTextureMetas()) {
+
+            TextureMetaSerializer.serialize(
+                    root.toPath().resolve("assets"),
+                    textureMeta
+            );
+        }
+
     }
 }
