@@ -3,6 +3,7 @@ package com.eclectusstudio.pantheon.common.serializer;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.common.ResourcePack;
 import com.eclectusstudio.pantheon.common.resource.atlas.Atlas;
+import com.eclectusstudio.pantheon.common.resource.blockstate.BlockStateDefinition;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import com.eclectusstudio.pantheon.common.resource.fonts.Font;
 import com.eclectusstudio.pantheon.common.resource.language.Language;
@@ -11,6 +12,7 @@ import com.eclectusstudio.pantheon.common.resource.regioncompliance.RegionCompli
 import com.eclectusstudio.pantheon.common.resource.texture.TextureMeta;
 import com.eclectusstudio.pantheon.common.resource.waypointstyle.WaypointStyle;
 import com.eclectusstudio.pantheon.common.serializer.atlas.AtlasSerializer;
+import com.eclectusstudio.pantheon.common.serializer.blockstate.BlockStateSerializer;
 import com.eclectusstudio.pantheon.common.serializer.equipment.EquipmentSerializer;
 import com.eclectusstudio.pantheon.common.serializer.font.FontSerializer;
 import com.eclectusstudio.pantheon.common.serializer.items.ItemsSerializer;
@@ -131,5 +133,13 @@ public class ResourcePackSerializer {
             );
         }
 
+        for (BlockStateDefinition blockStateDefinition :
+                pack.getBlockStateDefinitions()) {
+
+            BlockStateSerializer.serialize(
+                    root.toPath().resolve("assets"),
+                    blockStateDefinition
+            );
+        }
     }
 }

@@ -4,7 +4,7 @@ import com.eclectusstudio.pantheon.common.ResourceLocation;
 
 public class ModelVariant {
 
-    private ResourceLocation model;
+    private final ResourceLocation model;
 
     private int x;
     private int y;
@@ -32,5 +32,29 @@ public class ModelVariant {
     public ModelVariant uvlock(boolean uvlock) {
         this.uvlock = uvlock;
         return this;
+    }
+
+    public ResourceLocation getModel() {
+        return model;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getZ() {
+        return z;
+    }
+
+    public boolean isUvlock() {
+        return uvlock;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }

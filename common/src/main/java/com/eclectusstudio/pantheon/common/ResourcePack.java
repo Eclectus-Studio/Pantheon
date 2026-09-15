@@ -1,6 +1,7 @@
 package com.eclectusstudio.pantheon.common;
 
 import com.eclectusstudio.pantheon.common.resource.atlas.Atlas;
+import com.eclectusstudio.pantheon.common.resource.blockstate.BlockStateDefinition;
 import com.eclectusstudio.pantheon.common.resource.fonts.Font;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipment;
 import com.eclectusstudio.pantheon.common.resource.equipment.Equipments;
@@ -40,6 +41,8 @@ public final class ResourcePack {
 
     private final List<TextureMeta> textureMetas;
 
+    private final List<BlockStateDefinition> blockStateDefinitions;
+
     public ResourcePack(PackMCMeta meta) {
 
         this.metadata = meta;
@@ -54,6 +57,7 @@ public final class ResourcePack {
         regionComplianceWarnings = new ArrayList<>();
         atlases = new ArrayList<>();
         textureMetas = new ArrayList<>();
+        blockStateDefinitions = new ArrayList<>();
     }
 
 
@@ -142,6 +146,11 @@ public final class ResourcePack {
         return this;
     }
 
+    public ResourcePack addBlockStateDefinition(BlockStateDefinition blockStateDefinition){
+        blockStateDefinitions.add(blockStateDefinition);
+
+        return this;
+    }
 
     public ResourcePack setSoundsFile(SoundsFile soundsFile) {
         this.soundsFile = soundsFile;
@@ -195,5 +204,9 @@ public final class ResourcePack {
 
     public List<TextureMeta> getTextureMetas() {
         return textureMetas;
+    }
+
+    public List<BlockStateDefinition> getBlockStateDefinitions() {
+        return blockStateDefinitions;
     }
 }

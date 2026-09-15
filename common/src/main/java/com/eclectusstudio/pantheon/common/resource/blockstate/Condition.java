@@ -1,10 +1,13 @@
 package com.eclectusstudio.pantheon.common.resource.blockstate;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Condition {
 
-    private Map<String, String> states = new HashMap<>();
+    private final Map<String, String> states = new HashMap<>();
 
     private List<Condition> and;
     private List<Condition> or;
@@ -24,5 +27,17 @@ public class Condition {
         Condition c = new Condition();
         c.or = Arrays.asList(conditions);
         return c;
+    }
+
+    public Map<String, String> getStates() {
+        return states;
+    }
+
+    public List<Condition> getAnd() {
+        return and;
+    }
+
+    public List<Condition> getOr() {
+        return or;
     }
 }
