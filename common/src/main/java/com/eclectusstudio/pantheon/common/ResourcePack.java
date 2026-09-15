@@ -11,6 +11,7 @@ import com.eclectusstudio.pantheon.common.resource.language.Language;
 import com.eclectusstudio.pantheon.common.resource.models.ItemModelDefinition;
 import com.eclectusstudio.pantheon.common.resource.regioncompliance.RegionComplianceWarning;
 import com.eclectusstudio.pantheon.common.resource.sounds.SoundsFile;
+import com.eclectusstudio.pantheon.common.resource.texts.Credits;
 import com.eclectusstudio.pantheon.common.resource.texture.TextureMeta;
 import com.eclectusstudio.pantheon.common.resource.waypointstyle.WaypointStyle;
 
@@ -30,6 +31,7 @@ public final class ResourcePack {
     private final Map<ResourceLocation, Font> fonts;
 
     private SoundsFile soundsFile;
+    private Credits credits;
 
     private final List<WaypointStyle> waypointStyles;
 
@@ -158,6 +160,11 @@ public final class ResourcePack {
         return this;
     }
 
+    public ResourcePack setCredits(Credits credits) {
+        this.credits = credits;
+        return this;
+    }
+
     /*
      * Getters
      */
@@ -184,6 +191,10 @@ public final class ResourcePack {
 
     public SoundsFile getSoundsFile() {
         return soundsFile;
+    }
+
+    public Credits getCredits() {
+        return credits;
     }
 
     public List<WaypointStyle> getWaypointStyles() {

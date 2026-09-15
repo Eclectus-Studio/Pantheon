@@ -20,6 +20,7 @@ import com.eclectusstudio.pantheon.common.serializer.language.LanguageSerializer
 import com.eclectusstudio.pantheon.common.serializer.models.ModelSerializer;
 import com.eclectusstudio.pantheon.common.serializer.regioncompliance.RegionComplianceWarningSerializer;
 import com.eclectusstudio.pantheon.common.serializer.sounds.SoundsSerializer;
+import com.eclectusstudio.pantheon.common.serializer.texts.CreditsSerializer;
 import com.eclectusstudio.pantheon.common.serializer.texture.TextureMetaSerializer;
 import com.eclectusstudio.pantheon.common.serializer.waypointstyle.WaypointStyleSerializer;
 
@@ -141,5 +142,10 @@ public class ResourcePackSerializer {
                     blockStateDefinition
             );
         }
+
+        CreditsSerializer.serialize(
+                root.toPath().resolve("assets"),
+                pack.getCredits()
+        );
     }
 }
