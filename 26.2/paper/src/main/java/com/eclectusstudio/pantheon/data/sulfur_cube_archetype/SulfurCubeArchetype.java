@@ -6,13 +6,23 @@ import org.bukkit.attribute.AttributeModifier;
 import java.util.List;
 
 public class SulfurCubeArchetype {
-    private Explosion explosion;
-    private SoundSetting soundSetting;
+    private final Explosion explosion;
+    private final SoundSetting soundSetting;
+    private final ContactDamage contactDamage;
 
-    private AttributeModifier attributeModifier;
+    private final AttributeModifier attributeModifier;
 
-    private boolean buoyant;
-    private List<Material> items;
+    private final boolean buoyant;
+    private final List<Material> items;
+
+    public SulfurCubeArchetype(Explosion explosion, SoundSetting soundSetting, ContactDamage contactDamage, AttributeModifier attributeModifier, boolean buoyant, List<Material> items) {
+        this.explosion = explosion;
+        this.soundSetting = soundSetting;
+        this.contactDamage = contactDamage;
+        this.attributeModifier = attributeModifier;
+        this.buoyant = buoyant;
+        this.items = items;
+    }
 
     public SoundSetting getSoundSetting() {
         return soundSetting;
@@ -32,5 +42,9 @@ public class SulfurCubeArchetype {
 
     public AttributeModifier getAttributeModifier() {
         return attributeModifier;
+    }
+
+    public ContactDamage getContactDamage() {
+        return contactDamage;
     }
 }
