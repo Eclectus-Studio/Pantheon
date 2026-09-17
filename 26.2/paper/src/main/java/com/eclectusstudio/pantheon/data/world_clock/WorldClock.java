@@ -8,4 +8,8 @@ public class WorldClock {
     public WorldClock(ResourceLocation location) {
         this.location = location;
     }
+
+    public ResourceLocation getLocation() {
+        return location;
+    }
 }

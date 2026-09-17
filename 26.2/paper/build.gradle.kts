@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("26.2.build.+")
+    paperweight.paperDevBundle("26.3.build.+")
     implementation(project(":common"))
     implementation("commons-codec:commons-codec:1.22.0")
 }
