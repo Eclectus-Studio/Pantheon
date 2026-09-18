@@ -35,12 +35,11 @@ public final class Pantheon extends JavaPlugin {
                 LifecycleEvents.COMMANDS,
                 event -> {
                     event.registrar().register(
-                            "getitem",
-                            new GetCustomItemCommand()
+                            GetCustomItemCommand.create()
                     );
+
                     event.registrar().register(
-                            "customitems",
-                            new CustomItemsCommand()
+                            CustomItemsCommand.create()
                     );
                 }
         );

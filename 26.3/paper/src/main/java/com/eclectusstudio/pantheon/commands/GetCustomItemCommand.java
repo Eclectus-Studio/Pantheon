@@ -3,56 +3,66 @@ package com.eclectusstudio.pantheon.commands;
 import com.eclectusstudio.pantheon.common.ResourceLocation;
 import com.eclectusstudio.pantheon.item.Item;
 import com.eclectusstudio.pantheon.registry.ItemRegistry;
-import io.papermc.paper.command.brigadier.BasicCommand;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
-import java.util.Collection;
-import java.util.List;
+public class GetCustomItemCommand {
 
-public class GetCustomItemCommand implements BasicCommand {
+    public static LiteralCommandNode<CommandSourceStack> create() {
+        return Commands.literal("getitem")
+                .then(
+                        Commands.argument("id", StringArgumentType.string())
+                                .suggests((context, builder) -> {
+                                    String current = builder.getRemainingLowerCase();
 
-    @Override
-    public void execute(CommandSourceStack source, String[] args) {
+                                    ItemRegistry.getItems().stream()
+                                            .map(item -> item.getId().toString())
+                                            .filter(id -> id.toLowerCase().startsWith(current))
+                                            .forEach(builder::suggest);
 
-        if (!(source.getSender() instanceof Player player)) {
-            source.getSender().sendMessage("Players only.");
-            return;
-        }
+                                    return builder.buildFuture();
+                                })
+                                .executes(context -> {
+                                    if (!(context.getSource().getSender() instanceof Player player)) {
+                                        context.getSource().getSender().sendMessage(
+                                                Component.text("Players only.")
+                                        );
+                                        return 0;
+                                    }
 
-        if (args.length != 1) {
-            player.sendMessage("/getitem <id>");
-            return;
-        }
+                                    String id = StringArgumentType.getString(
+                                            context,
+                                            "id"
+                                    );
 
-        Item item = ItemRegistry.get(
-                ResourceLocation.fromString(args[0])
-        );
+                                    Item item = ItemRegistry.get(
+                                            ResourceLocation.fromString(id)
+                                    );
 
-        if (item == null) {
-            player.sendMessage("Unknown item.");
-            return;
-        }
+                                    if (item == null) {
+                                        player.sendMessage(
+                                                Component.text("Unknown item.")
+                                        );
+                                        return 0;
+                                    }
 
-        player.getInventory().addItem(item.createStack());
+                                    player.getInventory().addItem(
+                                            item.createStack()
+                                    );
 
-        player.sendMessage(
-                Component.text("Given " + item.getId())
-        );
-    }
+                                    player.sendMessage(
+                                            Component.text(
+                                                    "Given " + item.getId()
+                                            )
+                                    );
 
-    @Override
-    public Collection<String> suggest(CommandSourceStack source, String[] args) {
-        if (args.length > 1) {
-            return List.of();
-        }
-
-        String current = args.length == 0 ? "" : args[0].toLowerCase();
-
-        return ItemRegistry.getItems().stream()
-                .map(item -> item.getId().toString())
-                .filter(id -> id.toLowerCase().startsWith(current))
-                .toList();
+                                    return 1;
+                                })
+                )
+                .build();
     }
 }
