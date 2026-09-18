@@ -72,9 +72,8 @@ final class SpawnConditionTranslator {
         }
 
         RegistryOps.RegistryInfoLookup lookup = conversions.lookup();
-        RegistryOps.RegistryInfo<T> info = lookup.<T>lookup(registryKey)
+        HolderGetter<T> getter = lookup.<T>lookup(registryKey)
                 .orElseThrow(() -> new IllegalStateException("No registry info available for " + registryKey));
-        HolderGetter<T> getter = info.getter();
 
         if (targets.get(0).isTag()) {
             TagKey<T> tagKey = TagKey.create(registryKey, toMcIdentifier(targets.get(0).location()));
