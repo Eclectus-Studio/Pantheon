@@ -15,7 +15,7 @@ public class GetCustomItemCommand {
     public static LiteralCommandNode<CommandSourceStack> create() {
         return Commands.literal("getitem")
                 .then(
-                        Commands.argument("id", StringArgumentType.string())
+                        Commands.argument("id", StringArgumentType.word())
                                 .suggests((context, builder) -> {
                                     String current = builder.getRemainingLowerCase();
 
@@ -34,14 +34,20 @@ public class GetCustomItemCommand {
                                         return 0;
                                     }
 
-                                    String id = StringArgumentType.getString(
-                                            context,
-                                            "id"
-                                    );
+                                    String id = StringArgumentType.getString(context, "id");
 
-                                    Item item = ItemRegistry.get(
-                                            ResourceLocation.fromString(id)
-                                    );
+                                    ResourceLocation resourceLocation;
+
+                                    try {
+                                        resourceLocation = ResourceLocation.fromString(id);
+                                    } catch (IllegalArgumentException e) {
+                                        player.sendMessage(
+                                                Component.text("Invalid resource location: " + id)
+                                        );
+                                        return 0;
+                                    }
+
+                                    Item item = ItemRegistry.get(resourceLocation);
 
                                     if (item == null) {
                                         player.sendMessage(
@@ -50,14 +56,10 @@ public class GetCustomItemCommand {
                                         return 0;
                                     }
 
-                                    player.getInventory().addItem(
-                                            item.createStack()
-                                    );
+                                    player.getInventory().addItem(item.createStack());
 
                                     player.sendMessage(
-                                            Component.text(
-                                                    "Given " + item.getId()
-                                            )
+                                            Component.text("Given " + item.getId())
                                     );
 
                                     return 1;
