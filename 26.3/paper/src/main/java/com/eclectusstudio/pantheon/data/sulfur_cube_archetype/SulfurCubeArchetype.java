@@ -10,16 +10,19 @@ public class SulfurCubeArchetype {
     private final SoundSetting soundSetting;
     private final ContactDamage contactDamage;
 
-    private final AttributeModifier attributeModifier;
+    private final AttributeEntry AttributeEntry;
+
+    private final KnockbackModifier knockbackModifier;
 
     private final boolean buoyant;
     private final List<Material> items;
 
-    public SulfurCubeArchetype(Explosion explosion, SoundSetting soundSetting, ContactDamage contactDamage, AttributeModifier attributeModifier, boolean buoyant, List<Material> items) {
+    public SulfurCubeArchetype(Explosion explosion, SoundSetting soundSetting, ContactDamage contactDamage, AttributeEntry attributeEntry, KnockbackModifier knockbackModifier, boolean buoyant, List<Material> items) {
         this.explosion = explosion;
         this.soundSetting = soundSetting;
         this.contactDamage = contactDamage;
-        this.attributeModifier = attributeModifier;
+        AttributeEntry = attributeEntry;
+        this.knockbackModifier = knockbackModifier;
         this.buoyant = buoyant;
         this.items = items;
     }
@@ -36,12 +39,16 @@ public class SulfurCubeArchetype {
         return items;
     }
 
-    public boolean isBuoyant() {
-        return buoyant;
+    public AttributeEntry getAttributeEntry() {
+        return AttributeEntry;
     }
 
-    public AttributeModifier getAttributeModifier() {
-        return attributeModifier;
+    public KnockbackModifier getKnockbackModifier() {
+        return knockbackModifier;
+    }
+
+    public boolean isBuoyant() {
+        return buoyant;
     }
 
     public ContactDamage getContactDamage() {
