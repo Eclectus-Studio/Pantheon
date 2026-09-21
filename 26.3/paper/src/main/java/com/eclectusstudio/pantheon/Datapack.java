@@ -8,6 +8,7 @@ import com.eclectusstudio.pantheon.data.frog_variant.FrogVariant;
 import com.eclectusstudio.pantheon.data.jukebox_song.JukeboxSong;
 import com.eclectusstudio.pantheon.data.painting_variant.PaintingVariant;
 import com.eclectusstudio.pantheon.data.pig_variant.PigVariant;
+import com.eclectusstudio.pantheon.data.sulfur_cube_archetype.SulfurCubeArchetype;
 import com.eclectusstudio.pantheon.data.wolf_sound_variant.WolfSoundVariant;
 import com.eclectusstudio.pantheon.data.wolf_variant.WolfVariant;
 import com.eclectusstudio.pantheon.data.world_clock.WorldClock;
@@ -25,6 +26,7 @@ public class Datapack {
     private final List<JukeboxSong> jukeboxSongs;
     private final List<PaintingVariant> paintingVariants;
     private final List<PigVariant> pigVariants;
+    private final List<SulfurCubeArchetype> sulfurCubeArchetypes;
     private final List<WolfSoundVariant> wolfSoundVariants;
     private final List<WolfVariant> wolfVariants;
     private final List<WorldClock> worldClocks;
@@ -39,6 +41,7 @@ public class Datapack {
         jukeboxSongs = new ArrayList<>();
         paintingVariants = new ArrayList<>();
         pigVariants = new ArrayList<>();
+        sulfurCubeArchetypes = new ArrayList<>();
         wolfSoundVariants = new ArrayList<>();
         wolfVariants = new ArrayList<>();
         worldClocks = new ArrayList<>();
@@ -75,6 +78,10 @@ public class Datapack {
 
     public void addPigVariant(PigVariant variant){
         pigVariants.add(variant);
+    }
+
+    public void addSulfurCubeArchetype(SulfurCubeArchetype sulfurCubeArchetype){
+        sulfurCubeArchetypes.add(sulfurCubeArchetype);
     }
 
     public void addWolfSoundVariant(WolfSoundVariant soundVariant){
@@ -123,6 +130,10 @@ public class Datapack {
 
     public List<PigVariant> getPigVariants() {
         return pigVariants;
+    }
+
+    public List<SulfurCubeArchetype> getSulfurCubeArchetypes() {
+        return sulfurCubeArchetypes;
     }
 
     public List<WolfSoundVariant> getWolfSoundVariants() {

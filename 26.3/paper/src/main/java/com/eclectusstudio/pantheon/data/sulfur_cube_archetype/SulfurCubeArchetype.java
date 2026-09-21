@@ -1,11 +1,14 @@
 package com.eclectusstudio.pantheon.data.sulfur_cube_archetype;
 
+import com.eclectusstudio.pantheon.common.ResourceLocation;
 import org.bukkit.Material;
 import org.bukkit.attribute.AttributeModifier;
 
 import java.util.List;
 
 public class SulfurCubeArchetype {
+    private final ResourceLocation location;
+
     private final Explosion explosion;
     private final SoundSetting soundSetting;
     private final ContactDamage contactDamage;
@@ -17,7 +20,8 @@ public class SulfurCubeArchetype {
     private final boolean buoyant;
     private final List<Material> items;
 
-    public SulfurCubeArchetype(Explosion explosion, SoundSetting soundSetting, ContactDamage contactDamage, AttributeEntry attributeEntry, KnockbackModifier knockbackModifier, boolean buoyant, List<Material> items) {
+    public SulfurCubeArchetype(ResourceLocation location, Explosion explosion, SoundSetting soundSetting, ContactDamage contactDamage, AttributeEntry attributeEntry, KnockbackModifier knockbackModifier, boolean buoyant, List<Material> items) {
+        this.location = location;
         this.explosion = explosion;
         this.soundSetting = soundSetting;
         this.contactDamage = contactDamage;
@@ -53,5 +57,9 @@ public class SulfurCubeArchetype {
 
     public ContactDamage getContactDamage() {
         return contactDamage;
+    }
+
+    public ResourceLocation getLocation() {
+        return location;
     }
 }

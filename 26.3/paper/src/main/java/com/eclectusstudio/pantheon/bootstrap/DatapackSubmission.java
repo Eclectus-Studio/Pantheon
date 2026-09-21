@@ -16,6 +16,7 @@ public final class DatapackSubmission {
         DATAPACK.getJukeboxSongs().addAll(datapack.getJukeboxSongs());
         DATAPACK.getPaintingVariants().addAll(datapack.getPaintingVariants());
         DATAPACK.getPigVariants().addAll(datapack.getPigVariants());
+        DATAPACK.getSulfurCubeArchetypes().addAll(datapack.getSulfurCubeArchetypes());
         DATAPACK.getWolfSoundVariants().addAll(datapack.getWolfSoundVariants());
         DATAPACK.getWolfVariants().addAll(datapack.getWolfVariants());
         DATAPACK.getWorldClocks().addAll(datapack.getWorldClocks());

@@ -10,8 +10,12 @@ import com.eclectusstudio.pantheon.data.sulfur_cube_archetype.SulfurCubeArchetyp
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.data.SulfurCubeArchetypeRegistryEntry;
+import io.papermc.paper.registry.set.RegistryKeySet;
+import io.papermc.paper.registry.set.RegistrySet;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.damage.DamageType;
+import org.bukkit.inventory.ItemType;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,19 +23,16 @@ import java.util.stream.Collectors;
 import static com.eclectusstudio.pantheon.utils.LocationToNamespaceKey.toKey;
 
 public final class SulfurCubeArchetypeAdapter {
-    // TODO finish
 
     private SulfurCubeArchetypeAdapter() {}
 
     public static void apply(SulfurCubeArchetype archetype, SulfurCubeArchetypeRegistryEntry.Builder builder) {
         builder
                 .buoyant(archetype.isBuoyant())
+                .items(toItemKeySet(archetype.getItems()))
                 .knockbackModifiers(toKnockbackModifiers(archetype.getKnockbackModifier()))
                 .soundSettings(toSoundSettings(archetype.getSoundSetting()))
                 .attributeModifiers(toAttributeEntries(List.of(archetype.getAttributeEntry())));
-
-        // items(...) still pending — needs RegistryKeySet's public construction API confirmed
-        // before List<Material> can be converted into a RegistryKeySet<ItemType>.
 
         if (archetype.getExplosion() != null) {
             builder.explosion(toExplosionSettings(archetype.getExplosion()));
@@ -98,5 +99,13 @@ public final class SulfurCubeArchetypeAdapter {
         );
 
         return SulfurCubeArchetypeRegistryEntry.AttributeEntry.of(attributeKey, entry.getModifier());
+    }
+
+    private static RegistryKeySet<ItemType> toItemKeySet(List<Material> materials) {
+        List<TypedKey<ItemType>> keys = materials.stream()
+                .map(material -> TypedKey.create(RegistryKey.ITEM, material.getKey()))
+                .collect(Collectors.toList());
+
+        return RegistrySet.keySet(RegistryKey.ITEM, keys);
     }
 }
