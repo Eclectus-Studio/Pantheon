@@ -21,6 +21,11 @@ public final class DatapackSubmission {
         DATAPACK.getWolfVariants().addAll(datapack.getWolfVariants());
         DATAPACK.getWorldClocks().addAll(datapack.getWorldClocks());
         DATAPACK.getZombieNautilusVariants().addAll(datapack.getZombieNautilusVariants());
+        DATAPACK.getTrimMaterials().addAll(datapack.getTrimMaterials());
+        DATAPACK.getTrimPatterns().addAll(datapack.getTrimPatterns());
+        DATAPACK.getBannerPatterns().addAll(datapack.getBannerPatterns());
+        DATAPACK.getDecoratedPotPatterns().addAll(datapack.getDecoratedPotPatterns());
+        DATAPACK.getVillagerTrades().addAll(datapack.getVillagerTrades());
     }
 
     public static Datapack getDatapack() {

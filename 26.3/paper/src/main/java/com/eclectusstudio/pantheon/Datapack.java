@@ -1,14 +1,19 @@
 package com.eclectusstudio.pantheon;
 
+import com.eclectusstudio.pantheon.data.banner_pattern.BannerPattern;
 import com.eclectusstudio.pantheon.data.cat_variant.CatVariant;
 import com.eclectusstudio.pantheon.data.chicken_variant.ChickenVariant;
 import com.eclectusstudio.pantheon.data.cow_variant.CowVariant;
 import com.eclectusstudio.pantheon.data.damage_type.DamageType;
+import com.eclectusstudio.pantheon.data.decoratedpotpattern.DecoratedPotPattern;
 import com.eclectusstudio.pantheon.data.frog_variant.FrogVariant;
 import com.eclectusstudio.pantheon.data.jukebox_song.JukeboxSong;
 import com.eclectusstudio.pantheon.data.painting_variant.PaintingVariant;
 import com.eclectusstudio.pantheon.data.pig_variant.PigVariant;
 import com.eclectusstudio.pantheon.data.sulfur_cube_archetype.SulfurCubeArchetype;
+import com.eclectusstudio.pantheon.data.trim_material.TrimMaterial;
+import com.eclectusstudio.pantheon.data.trim_pattern.TrimPattern;
+import com.eclectusstudio.pantheon.data.villager_trade.VillagerTrade;
 import com.eclectusstudio.pantheon.data.wolf_sound_variant.WolfSoundVariant;
 import com.eclectusstudio.pantheon.data.wolf_variant.WolfVariant;
 import com.eclectusstudio.pantheon.data.world_clock.WorldClock;
@@ -31,6 +36,11 @@ public class Datapack {
     private final List<WolfVariant> wolfVariants;
     private final List<WorldClock> worldClocks;
     private final List<ZombieNautilusVariant> zombieNautilusVariants;
+    private final List<TrimMaterial> trimMaterials;
+    private final List<TrimPattern> trimPatterns;
+    private final List<BannerPattern> bannerPatterns;
+    private final List<DecoratedPotPattern> decoratedPotPatterns;
+    private final List<VillagerTrade> villagerTrades;
 
     public Datapack(){
         catVariants = new ArrayList<>();
@@ -46,6 +56,11 @@ public class Datapack {
         wolfVariants = new ArrayList<>();
         worldClocks = new ArrayList<>();
         zombieNautilusVariants = new ArrayList<>();
+        trimMaterials = new ArrayList<>();
+        trimPatterns = new ArrayList<>();
+        bannerPatterns = new ArrayList<>();
+        decoratedPotPatterns = new ArrayList<>();
+        villagerTrades = new ArrayList<>();
     }
 
     public void addCatVariant(CatVariant variant){
@@ -100,6 +115,26 @@ public class Datapack {
         zombieNautilusVariants.add(variant);
     }
 
+    public void addTrimMaterial(TrimMaterial trimMaterial) {
+        trimMaterials.add(trimMaterial);
+    }
+
+    public void addTrimPatterns(TrimPattern trimPattern) {
+        trimPatterns.add(trimPattern);
+    }
+
+    public void addBannerPattern(BannerPattern bannerPattern){
+        bannerPatterns.add(bannerPattern);
+    }
+
+    public void addDecoratedPotPattern(DecoratedPotPattern decoratedPotPattern){
+        decoratedPotPatterns.add(decoratedPotPattern);
+    }
+
+    public void addVillagerTrade(VillagerTrade villagerTrade){
+        villagerTrades.add(villagerTrade);
+    }
+
     public List<CatVariant> getCatVariants() {
         return catVariants;
     }
@@ -150,5 +185,25 @@ public class Datapack {
 
     public List<ZombieNautilusVariant> getZombieNautilusVariants() {
         return zombieNautilusVariants;
+    }
+
+    public List<TrimMaterial> getTrimMaterials() {
+        return trimMaterials;
+    }
+
+    public List<TrimPattern> getTrimPatterns() {
+        return trimPatterns;
+    }
+
+    public List<BannerPattern> getBannerPatterns() {
+        return bannerPatterns;
+    }
+
+    public List<DecoratedPotPattern> getDecoratedPotPatterns() {
+        return decoratedPotPatterns;
+    }
+
+    public List<VillagerTrade> getVillagerTrades() {
+        return villagerTrades;
     }
 }

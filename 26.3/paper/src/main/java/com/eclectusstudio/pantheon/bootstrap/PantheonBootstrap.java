@@ -4,6 +4,7 @@ import com.eclectusstudio.pantheon.bootstrap.adapters.damage.DamageTypeAdapter;
 import com.eclectusstudio.pantheon.bootstrap.adapters.jukeboxsong.JukeboxSongAdapter;
 import com.eclectusstudio.pantheon.bootstrap.adapters.painting.PaintingVariantAdapter;
 import com.eclectusstudio.pantheon.bootstrap.adapters.suflurcubearchetype.SulfurCubeArchetypeAdapter;
+import com.eclectusstudio.pantheon.bootstrap.adapters.trims.TrimMaterialAdapter;
 import com.eclectusstudio.pantheon.bootstrap.adapters.variants.*;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
@@ -112,6 +113,13 @@ public class PantheonBootstrap implements PluginBootstrap {
             for (var archetype : DatapackSubmission.getDatapack().getSulfurCubeArchetypes()) {
                 TypedKey<SulfurCube.Archetype> key = toTypedKey(archetype.getLocation(), RegistryKey.SULFUR_CUBE_ARCHETYPE);
                 event.registry().register(key, builder -> SulfurCubeArchetypeAdapter.apply(archetype, builder));
+            }
+        }));
+
+        manager.registerEventHandler(RegistryEvents.TRIM_MATERIAL.compose().newHandler(event -> {
+            for (var trimMaterial : DatapackSubmission.getDatapack().getTrimMaterials()) {
+                TypedKey<TrimMaterial> key = toTypedKey(trimMaterial.getLocation(), RegistryKey.TRIM_MATERIAL);
+                event.registry().register(key, builder -> TrimMaterialAdapter.apply(trimMaterial, builder));
             }
         }));
     }
